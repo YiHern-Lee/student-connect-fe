@@ -2,10 +2,13 @@ import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { home, login, signup } from "./pages/index";
 import { Navbar } from "./components/index";
+import theme from './util/theme';
+import { MuiThemeProvider } from '@material-ui/core';
 
 function App() {
   return (
-    <div className="App">
+    <MuiThemeProvider theme={ theme }>
+      <div className="App">
         <Router>
           <div className="container">
             <Navbar />
@@ -16,7 +19,8 @@ function App() {
               </Switch>
           </div>
         </Router>
-    </div>
+      </div>
+    </MuiThemeProvider>
   );
 }
 
