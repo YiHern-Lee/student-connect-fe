@@ -1,4 +1,5 @@
-import Navbar from "./Navbar";
-import ForumDisplay from "./forum/ForumDisplay";
+import Navbar from "./layout/Navbar";
+import ForumDisplay from "./home/ForumDisplay";
+import PostDisplay from "./home/PostDisplay";
 
-export { Navbar, ForumDisplay };
+export { Navbar, ForumDisplay, PostDisplay };

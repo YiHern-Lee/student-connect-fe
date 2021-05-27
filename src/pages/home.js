@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
-import { ForumDisplay } from '../components';
+import { ForumDisplay, PostDisplay } from '../components';
 
 class home extends Component {
     state = {
-        forums: null
+        forums: null,
+        posts: null
     }
 
     componentDidMount() {
@@ -14,8 +15,14 @@ class home extends Component {
                 this.setState({
                     forums: res.data
                 });
+            }).catch(err => console.log(err));
+        axios.get('/posts')
+            .then(res => {
+                this.setState({
+                    posts: res.data
+                });
             }).catch(err => {
-                console.error(err);
+                console.log(err);
             })
     }
 
@@ -23,11 +30,16 @@ class home extends Component {
         let recentForumsMarkup = this.state.forums ? (
             this.state.forums.map(forum => <ForumDisplay forum={ forum } />)
         ) : <p>Loading...</p>
-        return(
+
+        let recentPostsMarkup = this.state.posts ? (
+            this.state.posts.map(post => <PostDisplay post={ post } />)
+        ) : <p>Loading...</p>
+
+        return (
             <div>
                 <Grid container spacing={10}>
                     <Grid item sm={8} xs={12}>
-                        Posts...
+                        {recentPostsMarkup}
                     </Grid>
                     <Grid item sm={4} xs={12}>
                         {recentForumsMarkup}

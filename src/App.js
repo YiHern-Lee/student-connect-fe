@@ -2,8 +2,10 @@ import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { home, login, signup } from "./pages/index";
 import { Navbar } from "./components/index";
-import theme from './util/theme';
-import { MuiThemeProvider } from '@material-ui/core';
+import themeData from './util/theme';
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
+
+const theme = createMuiTheme(themeData);
 
 function App() {
   return (
