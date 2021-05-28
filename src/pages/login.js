@@ -3,6 +3,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types';
 import AppIcon from '../images/social-media.png';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 // MUI
 import Grid from '@material-ui/core/Grid';
@@ -34,7 +35,8 @@ class login extends Component {
         this.state = {
             email: '',
             password: '',
-            errors: {}
+            errors: {},
+            loading: false
         };
     }
 
@@ -49,8 +51,10 @@ class login extends Component {
             password: this.state.password
         }
         axios.post('/login', userData)
+            // res.data is a dictionary containing the authentication token
             .then(res => {
                 console.log(res.data);
+                localStorage.setItem('FirebaseIdToken', `Bearer ${res.data.token}`);
                 this.setState({
                     loading: false
                 });
@@ -58,6 +62,8 @@ class login extends Component {
             })
             .catch(err => {
                 this.setState({
+                    // err.response is a dictionary containing data, config, headers, request, status, status text.
+                    // err.response.data is a dictionary containing email or password (depends whats wrong)
                     errors: err.response.data,
                     loading: false
                 })
@@ -70,7 +76,6 @@ class login extends Component {
             [event.target.name]: event.target.value
         });
     }
-
 
     render() {
         const { classes } = this.props;
@@ -113,6 +118,11 @@ class login extends Component {
                             </Typography>
                         )}
                         <Button type="submit" variant="contained" color="default" className={classes.button}> Login </Button>
+                        <br />
+                        <small>
+                            Don't have an account? Sign up <Link to="/signup">here</Link>
+                        </small>
+
                     </form>
                 </Grid>
             </Grid>
