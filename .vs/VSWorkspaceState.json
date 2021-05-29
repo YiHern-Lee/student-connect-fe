@@ -1,8 +1,16 @@
 {
   "ExpandedNodes": [
     "",
-    "\\public"
+    "\\public",
+    "\\src",
+    "\\src\\components",
+    "\\src\\images",
+    "\\src\\pages",
+    "\\src\\redux",
+    "\\src\\redux\\actions",
+    "\\src\\redux\\reducers",
+    "\\src\\util"
   ],
-  "SelectedNode": "\\.gitignore",
+  "SelectedNode": "\\src\\redux\\actions\\userActions.js",
   "PreviewInSolutionExplorer": false
 }
