@@ -3,12 +3,14 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types';
 import AppIcon from '../images/social-media.png';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 // MUI
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const styles = {
     form: {
@@ -20,11 +22,22 @@ const styles = {
         margin: '20px auto 20px auto'
     },
     button: {
-        marginTop: 20
+        marginTop: 20,
+        position: 'relative'
     },
     customError: {
         color: 'red',
         fontSize:'0.8rem'
+    },
+    pageTitle: {
+        margin: '10px auto 10px auto'
+    },
+    textField: {
+        margin: '10px auto 10px auto'
+    },
+    progress: {
+        position: 'absolute',
+        margin: 'auto 30px auto 50px'
     }
 };
 
@@ -34,7 +47,8 @@ class login extends Component {
         this.state = {
             email: '',
             password: '',
-            errors: {}
+            errors: {},
+            loading: false
         };
     }
 
@@ -48,17 +62,22 @@ class login extends Component {
             email: this.state.email,
             password: this.state.password
         }
-        axios.post('https://asia-southeast2-student-connect-3d3e3.cloudfunctions.net/api/login', userData)
+        axios.post('/login', userData)
+            // res.data is a dictionary containing the authentication token
             .then(res => {
                 console.log(res.data);
+                localStorage.setItem('FirebaseIdToken', `Bearer ${res.data.token}`);
                 this.setState({
                     loading: false
                 });
                 this.props.history.push('/')
             })
             .catch(err => {
+                console.error(err.response.data)
                 this.setState({
-                    errors: err.data,
+                    // err.response is a dictionary containing data, config, headers, request, status, status text.
+                    // err.response.data is a dictionary containing email or password (depends whats wrong)
+                    errors: err.response.data,
                     loading: false
                 })
             })
@@ -71,7 +90,6 @@ class login extends Component {
         });
     }
 
-
     render() {
         const { classes } = this.props;
         const { errors, loading } = this.state;
@@ -81,7 +99,7 @@ class login extends Component {
                 <Grid item sm />
                 <Grid item sm>
                     <img src={AppIcon} alt='social' className={classes.image} />
-                    <p> Login </p>
+                    <Typography variant="h2" className={classes.pageTitle}>Login</Typography>
                     <form noValidate onSubmit={this.handleSubmit}>
                         <TextField
                             id="email"
@@ -112,9 +130,21 @@ class login extends Component {
                                 {errors.general}
                             </Typography>
                         )}
-                        <Button type="submit" variant="contained" color="default" className={classes.button}> Login </Button>
+                        <Button type="submit" 
+                            variant="contained" 
+                            color="default" 
+                            className={classes.button}
+                            disabled={loading}>
+                             Login 
+                        { loading && (<CircularProgress size={30} className={classes.progress} />) } </Button>
+                        <br />
+                        <small>
+                            Don't have an account? Sign up <Link to="/signup">here</Link>
+                        </small>
+
                     </form>
                 </Grid>
+                <Grid item sm />
             </Grid>
 
         );
