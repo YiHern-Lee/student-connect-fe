@@ -26,12 +26,12 @@ const styles = {
 class PostDisplay extends Component {
     render() {
         dayjs.extend(relativeTime);
-        const { classes, post : { title, body, username, createdAt, imageUrl } } = this.props
+        const { classes, post : { title, body, username, createdAt, userImageUrl } } = this.props
         return (
             <div>
                 <Card className={classes.card}>
-                    <CardMedia image={imageUrl} title="Profile Picture" className={classes.image}/>
-                    <CardContent className={classes.content}>
+                    <CardMedia image={userImageUrl} title="Profile Picture" className={classes.image}/>
+                    <CardContent className={classes.content}>    
                         <Typography variant="h6">
                             { username }
                         </Typography>

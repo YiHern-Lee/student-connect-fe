@@ -11,35 +11,11 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import themeData from '../util/theme';
 
 const styles = {
-    form: {
-        textAlign: 'centre'
-    },
-    image: {
-        width: 100,
-        height: 100,
-        margin: '20px auto 20px auto'
-    },
-    button: {
-        marginTop: 20,
-        position: 'relative'
-    },
-    customError: {
-        color: 'red',
-        fontSize:'0.8rem'
-    },
-    pageTitle: {
-        margin: '10px auto 10px auto'
-    },
-    textField: {
-        margin: '10px auto 10px auto'
-    },
-    progress: {
-        position: 'absolute',
-        margin: 'auto 30px auto 50px'
-    }
-};
+    ...themeData
+}
 
 class login extends Component {
     constructor() {
@@ -65,11 +41,11 @@ class login extends Component {
         axios.post('/login', userData)
             // res.data is a dictionary containing the authentication token
             .then(res => {
-                console.log(res.data);
-                localStorage.setItem('FirebaseIdToken', `Bearer ${res.data.token}`);
+                localStorage.setItem('FBIdToken', `Bearer ${res.data.token}`);
                 this.setState({
                     loading: false
                 });
+            }).then(() => {
                 this.props.history.push('/')
             })
             .catch(err => {
@@ -80,7 +56,7 @@ class login extends Component {
                     errors: err.response.data,
                     loading: false
                 })
-            })
+            });
     }
 
     // fills in the textfield with what you typed in

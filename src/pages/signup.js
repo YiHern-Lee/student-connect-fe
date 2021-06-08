@@ -10,24 +10,11 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import themeData from '../util/theme';
 
 const styles = {
-    form: {
-        textAlign: 'centre'
-    },
-    image: {
-        width: 100,
-        height: 100,
-        margin: '20px auto 20px auto'
-    },
-    button: {
-        marginTop: 20
-    },
-    customError: {
-        color: 'red',
-        fontSize: '0.8rem'
-    }
-};
+    ...themeData
+}
 
 class signup extends Component {
     constructor() {
@@ -58,7 +45,7 @@ class signup extends Component {
             // res.data is a dictionary containing the authentication token
             .then(res => {
                 console.log(res.data);
-                localStorage.setItem('FirebaseIdToken', `Bearer ${res.data.token}`);
+                localStorage.setItem('FBIdToken', `Bearer ${res.data.token}`);
                 this.setState({
                     loading: false
                 });
