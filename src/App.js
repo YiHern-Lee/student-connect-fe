@@ -6,11 +6,13 @@ import themeData from './util/theme';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
 
 // Redux
+import { Provider } from 'react-redux';
+import store from './redux/store';
 
 import jwtDecode from 'jwt-decode';
 import axios from 'axios';
 
-axios.defaults.baseURL = "https://asia-southeast2-student-connect-3d3e3.cloudfunctions.net/api";
+axios.defaults.baseURL = "http://localhost:5001/student-connect-3d3e3/asia-southeast2/api";
 
 const theme = createMuiTheme(themeData);
 
@@ -30,18 +32,20 @@ if (token) {
 function App() {
   return (
     <MuiThemeProvider theme={ theme }>
-      <div className="App">
-        <Router>
-          <div className="container">
-            <Navbar authenticated={ authenticated }/>
-              <Switch>
-                  <Route exact path="/" component={home}></Route>
-                  <Route exact path="/login" component={login}></Route>
-                  <Route exact path="/signup" component={signup}></Route>
-              </Switch>
-          </div>
-        </Router>
-      </div>
+      <Provider store={ store }>
+        <div className="App">
+          <Router>
+            <div className="container">
+              <Navbar authenticated={ authenticated }/>
+                <Switch>
+                    <Route exact path="/" component={home}></Route>
+                    <Route exact path="/login" component={login}></Route>
+                    <Route exact path="/signup" component={signup}></Route>
+                </Switch>
+            </div>
+          </Router>
+        </div>
+      </Provider>
     </MuiThemeProvider>
   );
 }

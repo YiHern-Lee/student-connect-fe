@@ -12,6 +12,10 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import themeData from '../util/theme';
 
+// Redux
+import { connect } from 'react-redux';
+import { signupUser } from '../redux/actions/userActions';
+
 const styles = {
     ...themeData
 }
@@ -25,8 +29,13 @@ class signup extends Component {
             confirmPassword: '',
             handle: '',
             errors: {},
-            loading: false
         };
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.UI.errors) {
+            this.setState({ errors: nextProps.UI.errors })
+        }
     }
 
     // upon submitting the email and password
@@ -40,25 +49,8 @@ class signup extends Component {
             password: this.state.password,
             confirmPassword: this.state.confirmPassword,
             username: this.state.username
-        }
-        axios.post('/signup', newUserData)
-            // res.data is a dictionary containing the authentication token
-            .then(res => {
-                console.log(res.data);
-                localStorage.setItem('FBIdToken', `Bearer ${res.data.token}`);
-                this.setState({
-                    loading: false
-                });
-                this.props.history.push('/')
-            })
-            .catch(err => {
-                this.setState({
-                    // err.response is a dictionary containing data, config, headers, request, status, status text.
-                    // err.response.data is a dictionary containing email or password (depends whats wrong)
-                    errors: err.response.data,
-                    loading: false
-                })
-            })
+        };
+        this.props.signupUser(newUserData, this.props.history);
     }
 
     // fills in the textfield with what you typed in
@@ -69,8 +61,8 @@ class signup extends Component {
     }
 
     render() {
-        const { classes } = this.props;
-        const { errors, loading } = this.state;
+        const { classes, UI: { loading } } = this.props;
+        const { errors } = this.state;
 
         return (
             <Grid container className={classes.form}>
@@ -148,7 +140,15 @@ class signup extends Component {
 }
 
 signup.propTypes = {
-    classes: PropTypes.object.isRequired
-}
+    classes: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired,
+    UI: PropTypes.object.isRequired,
+    signupUser: PropTypes.func.isRequired
+};
 
-export default withStyles(styles)(signup);
+const mapStateToProps = (state) => ({
+    user: state.user,
+    UI: state.UI
+});
+
+export default connect(mapStateToProps, { signupUser })(withStyles(styles)(signup));

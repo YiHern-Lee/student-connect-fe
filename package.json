@@ -44,5 +44,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://asia-southeast2-student-connect-3d3e3.cloudfunctions.net/api"
+  "proxy": "http://localhost:5001/student-connect-3d3e3/asia-southeast2/api"
 }

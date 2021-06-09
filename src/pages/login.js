@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types';
 import AppIcon from '../images/social-media.png';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 // MUI
@@ -12,6 +11,10 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import themeData from '../util/theme';
+
+// Redux
+import { connect } from 'react-redux';
+import { loginUser } from '../redux/actions/userActions';
 
 const styles = {
     ...themeData
@@ -23,40 +26,25 @@ class login extends Component {
         this.state = {
             email: '',
             password: '',
-            errors: {},
-            loading: false
+            errors: {}
         };
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.UI.errors) {
+            this.setState({ errors: nextProps.UI.errors })
+        }
     }
 
     // upon submitting the email and password
     handleSubmit = (event) => {
         event.preventDefault();
-        this.setState({
-            loading: true
-        });
+
         const userData = {
             email: this.state.email,
             password: this.state.password
-        }
-        axios.post('/login', userData)
-            // res.data is a dictionary containing the authentication token
-            .then(res => {
-                localStorage.setItem('FBIdToken', `Bearer ${res.data.token}`);
-                this.setState({
-                    loading: false
-                });
-            }).then(() => {
-                this.props.history.push('/')
-            })
-            .catch(err => {
-                console.error(err.response.data)
-                this.setState({
-                    // err.response is a dictionary containing data, config, headers, request, status, status text.
-                    // err.response.data is a dictionary containing email or password (depends whats wrong)
-                    errors: err.response.data,
-                    loading: false
-                })
-            });
+        };
+        this.props.loginUser(userData, this.props.history);
     }
 
     // fills in the textfield with what you typed in
@@ -67,8 +55,8 @@ class login extends Component {
     }
 
     render() {
-        const { classes } = this.props;
-        const { errors, loading } = this.state;
+        const { classes, UI: { loading } } = this.props;
+        const { errors } = this.state;
 
         return (
             <Grid container className={classes.form}>
@@ -128,7 +116,19 @@ class login extends Component {
 }
 
 login.propTypes = {
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
+    loginUser: PropTypes.func.isRequired,
+    user: PropTypes.object.isRequired,
+    UI: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(login);
+const mapStateToProps = (state) => ({
+    user: state.user,
+    UI: state.UI
+});
+
+const mapActionsToProps = {
+    loginUser
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(login));

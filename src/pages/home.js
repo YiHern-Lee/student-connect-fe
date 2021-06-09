@@ -28,7 +28,7 @@ class home extends Component {
 
     render() {
         let recentForumsMarkup = this.state.forums ? (
-            this.state.forums.map(forum => <ForumDisplay key={forum.Id} forum={ forum } />)
+            this.state.forums.map(forum => <ForumDisplay key={forum.title} forum={ forum } />)
         ) : <p></p>
 
         let recentPostsMarkup = this.state.posts ? (
