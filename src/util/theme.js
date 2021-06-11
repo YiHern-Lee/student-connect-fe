@@ -1,8 +1,14 @@
+const darkMode = false;
+
 const themeData = {
     palette: {
+        background: {
+            paper: darkMode ? '#4d4d4d' : '#ffffff',
+            default: darkMode ? '#555555' : '#f2f2f2'
+        },
         primary: {
             light: '#33c9dc',
-            main: '#00bcd4',
+            main: darkMode ? '#444444' : '#00bcd4',
             dark: '#008394',
             contrastText: '#fff'
         },
@@ -11,36 +17,84 @@ const themeData = {
             main: '#ffffff',
             dark: '#b22a00',
             contrastText: '#fff'
-        }
+        },
+        type: darkMode ? 'dark' : 'light' 
     }, 
-    typography: {
-        useNextVariants: true
-    },
-    form: {
-        textAlign: 'centre'
-    },
-    image: {
-        width: 100,
-        height: 100,
-        margin: '20px auto 20px auto'
-    },
-    button: {
-        marginTop: 20,
-        position: 'relative'
-    },
-    customError: {
-        color: 'red',
-        fontSize:'0.8rem'
-    },
-    pageTitle: {
-        margin: '10px auto 10px auto'
-    },
-    textField: {
-        margin: '10px auto 10px auto'
-    },
-    progress: {
-        position: 'absolute',
-        margin: 'auto 30px auto 50px'
+    styles: {
+        postTitle: {
+            margin: '10px auto 10px auto'
+        },
+        postTime: {
+            position: 'absolute',
+            marginBottom: '0px'
+        },
+        posterDisplay: {
+            margin: '1px 1px 60px 1px'
+        },
+        posterDisplayChild: {
+            float: 'left',
+            margin: 'auto 10px auto auto',
+            verticalAlign: 'top'
+        },
+        posterDisplayChildTextTop: {
+            marginTop: '-6px',
+            marginBottom: '-7px'
+        },
+        imageSmall: {
+            width: 30,
+            height: 30,
+            margin: 'auto 10px auto auto'
+        },
+        typography: {
+            useNextVariants: true,
+        },
+        form: {
+            textAlign: 'centre'
+        },
+        card: {
+            display: 'flex',
+            marginBottom: 20,
+        },
+        content: {
+            padding: 25
+        },
+        image: {
+            width: 100,
+            height: 100,
+            margin: '20px auto 20px auto'
+        },
+        button: {
+            marginTop: 20,
+            position: 'relative'
+        },
+        customError: {
+            color: 'red',
+            fontSize:'0.8rem'
+        },
+        pageTitle: {
+            margin: '10px auto 10px auto'
+        },
+        textField: {
+            margin: '10px auto 10px auto'
+        },
+        progress: {
+            position: 'absolute',
+            margin: 'auto 30px auto 50px'
+        },
+        list: {
+            width: '100%',
+        },
+        listItem: {
+            float: 'left',
+            margin: 'auto 10px auto auto',
+            verticalAlign: 'top'
+        },
+        forumHeader: {
+            marginLeft: '20px'
+        },
+        forumGrid: {
+            marginLeft: 'auto'
+        },
     }
 };
 

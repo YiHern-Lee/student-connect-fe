@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types';
 import AppIcon from '../images/social-media.png';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 // MUI
@@ -11,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import themeData from '../util/theme';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // Redux
 import { connect } from 'react-redux';
@@ -124,7 +124,13 @@ class signup extends Component {
                                 {errors.general}
                             </Typography>
                         )}
-                        <Button type="submit" variant="contained" color="default" className={classes.button}> Signup </Button>
+                        <Button type="submit" 
+                            variant="contained" 
+                            color="default" 
+                            className={classes.button}
+                            disabled={loading}> 
+                            Signup 
+                            { loading && (<CircularProgress size={30} className={classes.progress} />) } </Button>
                         <br />
                         <small>
                             Already have an account? Log in <Link to="/login">here</Link>

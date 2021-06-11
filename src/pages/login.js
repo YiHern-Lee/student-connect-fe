@@ -10,15 +10,14 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import themeData from '../util/theme';
 
 // Redux
 import { connect } from 'react-redux';
 import { loginUser } from '../redux/actions/userActions';
 
-const styles = {
-    ...themeData
-}
+const styles = (theme) => ({
+    ...theme.styles
+})
 
 class login extends Component {
     constructor() {

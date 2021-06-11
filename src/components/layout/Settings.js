@@ -1,10 +1,10 @@
 import React from 'react'
 import { Fade, Menu, MenuItem,
-    MenuList, Button } from '@material-ui/core';
+    MenuList, Button, Typography } from '@material-ui/core';
 
 const Link = require("react-router-dom").Link;
 
-export const Settings = (props) => {
+const Settings = (props) => {
     return (
         <div>
             <Button>
@@ -19,15 +19,23 @@ export const Settings = (props) => {
                     TransitionComponent={Fade}>
                     { props.authenticated ? 
                     <MenuList>
-                        Hi
+                        <MenuItem component={ Link } to='/'>
+                            <Typography>Settings</Typography>
+                        </MenuItem>
+                        <MenuItem onClick={ props.logout }>
+                            <Typography>Logout</Typography>
+                        </MenuItem>
                     </MenuList> : 
                     
                     <MenuList>
+                        <MenuItem component={ Link } to='/'>
+                            <Typography>Settings</Typography>
+                        </MenuItem>
                         <MenuItem component={ Link } to='/login'>
-                            Login
+                            <Typography>Login</Typography>
                         </MenuItem>
                         <MenuItem component={ Link } to='/signup'>
-                            Signup
+                            <Typography>Signup</Typography>
                         </MenuItem>
                     </MenuList> }
                 </Menu>
@@ -35,3 +43,5 @@ export const Settings = (props) => {
         </div>
     )
 }
+
+export default Settings
