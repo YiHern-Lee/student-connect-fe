@@ -18,15 +18,15 @@ class ForumDisplay extends Component {
         const { classes, forum : { faculty, title } } = this.props
         return (
             <div>
-                <Button style={{ textTransform: 'none'}} component={ Link } to={`/forums/${title}`}>
+                <Button style={{ textTransform: 'none', width: '350px'}} component={ Link } to={`/forums/${title}`}>
                     <ListItem className={ classes.listItem }>
                             <div>
-                            <Typography className={ classes.forumTitle } variant="h6">
-                                { title }
-                            </Typography>
-                            <Typography className={ classes.forumDescription } variant="body2" color="textSecondary">
-                                { faculty }
-                            </Typography>
+                                <Typography className={ classes.forumTitle } variant="h6">
+                                    { title }
+                                </Typography>
+                                <Typography className={ classes.forumDescription } variant="body2" color="textSecondary">
+                                    { faculty }
+                                </Typography>
                             </div>
                     </ListItem>
                 </Button>

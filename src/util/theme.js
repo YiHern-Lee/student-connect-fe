@@ -82,7 +82,7 @@ const themeData = {
             margin: 'auto 30px auto 50px'
         },
         list: {
-            width: '100%',
+            width: '200px',
         },
         listItem: {
             float: 'left',
@@ -90,7 +90,7 @@ const themeData = {
             verticalAlign: 'top'
         },
         forumHeader: {
-            marginLeft: '20px'
+            marginLeft: '30px'
         },
         forumGrid: {
             marginLeft: 'auto'

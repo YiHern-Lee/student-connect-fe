@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import Grid from '@material-ui/core/Grid';
-import axios from 'axios';
 import { PostDisplay } from '../components';
-import { List, Typography } from '@material-ui/core';
+import { Card, Grid, CardContent, Typography } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 import { connect } from 'react-redux';
@@ -21,7 +19,7 @@ export class forum extends Component {
     }
 
     render() {
-        const { classes, data: { info: { title, faculty }, posts} } = this.props;
+        const { classes, data: { info, posts} } = this.props;
         let forumPostsMarkup = posts ? (
             posts.map(post => <PostDisplay key={post.postId} post={ post } />)
             ) : <p></p>;
@@ -30,6 +28,17 @@ export class forum extends Component {
                 <Grid container spacing={10} justify='flex-end'>
                     <Grid item sm />
                     <Grid item sm={8} xs={12}>
+                        <Card>
+                            <CardContent>
+                                <Typography variant='h5'>
+                                    { info.title }
+                                </Typography>
+                                <Typography variant='body2'>
+                                    { info.faculty }
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                        <br />
                         {forumPostsMarkup}
                     </Grid>
                     <Grid item sm />

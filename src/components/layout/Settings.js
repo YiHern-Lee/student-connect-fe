@@ -1,10 +1,16 @@
+import withStyles from '@material-ui/core/styles/withStyles';
 import React from 'react'
 import { Fade, Menu, MenuItem,
     MenuList, Button, Typography } from '@material-ui/core';
 
 const Link = require("react-router-dom").Link;
 
+const styles = (theme) => ({
+    ...theme.styles
+})
+
 const Settings = (props) => {
+    const { classes } = props;
     return (
         <div>
             <Button>
@@ -17,17 +23,27 @@ const Settings = (props) => {
                     transformOrigin={{ vertical: "top", horizontal: "center" }}
                     onClose={props.onClose}
                     TransitionComponent={Fade}>
-                    { props.authenticated ? 
+                    
                     <MenuList>
                         <MenuItem component={ Link } to='/'>
                             <Typography>Settings</Typography>
                         </MenuItem>
+                        { props.authenticated ? 
                         <MenuItem onClick={ props.logout }>
                             <Typography>Logout</Typography>
+                        </MenuItem> :
+                        <div>
+                        <MenuItem component={ Link } to='/login'>
+                            <Typography>Login</Typography>
                         </MenuItem>
-                    </MenuList> : 
+                        <MenuItem component={ Link } to='/signup'>
+                            <Typography>Signup</Typography>
+                        </MenuItem>
+                        </div>
+                        }
+                    </MenuList>
                     
-                    <MenuList>
+                    {/* <MenuList>
                         <MenuItem component={ Link } to='/'>
                             <Typography>Settings</Typography>
                         </MenuItem>
@@ -37,11 +53,11 @@ const Settings = (props) => {
                         <MenuItem component={ Link } to='/signup'>
                             <Typography>Signup</Typography>
                         </MenuItem>
-                    </MenuList> }
+                    </MenuList> */}
                 </Menu>
             </Button>
         </div>
     )
 }
 
-export default Settings
+export default withStyles(styles)(Settings)

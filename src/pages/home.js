@@ -2,8 +2,12 @@ import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 import { ForumDisplay, PostDisplay } from '../components';
-import { Drawer, List, Typography } from '@material-ui/core';
+import { List, Typography, Card } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
+import { connect } from 'react-redux';
+import { getAllPosts, getAllForums } from '../redux/actions/dataActions';
+
+const Link = require("react-router-dom").Link;
 
 const styles = (theme) => ({
     ...theme.styles,
@@ -21,56 +25,62 @@ const styles = (theme) => ({
 })
 
 class home extends Component {
-    state = {
-        forums: null,
-        posts: null
-    }
-
     componentDidMount() {
-        axios.get('/forums')
-            .then(res => {
-                this.setState({
-                    forums: res.data
-                });
-            }).catch(err => console.log(err));
-        axios.get('/posts')
-            .then(res => {
-                this.setState({
-                    posts: res.data
-                });
-            }).catch(err => {
-                console.log(err);
-            })
+        this.props.getAllForums();
+        this.props.getAllPosts();
     }
 
     render() {
-        const { classes } = this.props;
+        const { classes, data: { posts, forums } } = this.props;
         console.log(classes)
-        let recentForumsMarkup = this.state.forums ? (
-            this.state.forums.map(forum => <ForumDisplay key={forum.title} forum={ forum } />)
+        let recentForumsMarkup = forums ? (
+            forums.map(forum => <ForumDisplay key={forum.title} forum={ forum } />)
         ) : <p></p>
 
-        let recentPostsMarkup = this.state.posts ? (
-            this.state.posts.map(post => <PostDisplay key={post.postId} post={ post } />)
+        let recentPostsMarkup = posts ? (
+            posts.map(post => <PostDisplay key={post.postId} post={ post } />)
         ) : <p></p>
 
         return (
             <div>
                 <Grid container spacing={10} justify='flex-end'>
-                    <Grid item sm />
                     <Grid item sm={8} xs={12}>
+                        <Card>
+                            <br />
+                                <div style={{ textAlign: "center" }}>
+                                    <Typography variant='h5'>Trending Posts</Typography>
+                                </div>
+                            <br />
+                        </Card>
+                        <br />
                         {recentPostsMarkup}
                     </Grid>
-                    <Grid item sm />
+                    <Grid item sm={4} xs={12}>
+                        <Card>
+                            <br/>
+                            <Typography p={2} variant='h6' className={ classes.forumHeader }>
+                                <Link to={'/forums'}>Forums</Link>
+                            </Typography>
+                            <List className={ classes.list }>{recentForumsMarkup}</List>
+                        </Card>
+                    </Grid>
                 </Grid>
-                <Drawer variant="permanent" anchor="right" className={classes.drawer} 
-                    classes={{ paper: classes.drawerPaper}}>
-                        <Typography variant='h6' className={ classes.forumHeader }>Forums</Typography>
-                        <List className={ classes.list }>{recentForumsMarkup}</List>
-                </Drawer>
+                
+                        
+
             </div>
         );
     }
 }
 
-export default withStyles(styles)(home);
+const mapStateToProps = (state) => ({
+    data: state.data,
+    UI: state.UI
+})
+
+const mapActionsToProps = {
+    getAllPosts,
+    getAllForums
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(home));

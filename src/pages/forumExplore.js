@@ -30,11 +30,9 @@ class forum extends Component {
         return (
             <div>
                 <Grid container spacing={0}>
-                    <Grid item sm />
                     <Grid item sm={6} xs={8} className={ classes.forumGrid } >
                         <List className={ classes.list }>{recentForumsMarkup}</List>
                     </Grid>
-                    <Grid item sm />
                 </Grid> 
             </div>
         )
