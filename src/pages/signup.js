@@ -16,9 +16,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { connect } from 'react-redux';
 import { signupUser } from '../redux/actions/userActions';
 
-const styles = {
-    ...themeData
-}
+const styles = (theme) => ({
+    ...theme.styles
+})
 
 class signup extends Component {
     constructor() {
@@ -32,9 +32,9 @@ class signup extends Component {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.UI.errors) {
-            this.setState({ errors: nextProps.UI.errors })
+    componentDidUpdate(prevProps) {
+        if (this.props.UI.errors !== prevProps.UI.errors) {
+            this.setState({ errors: this.props.UI.errors })
         }
     }
 
@@ -69,7 +69,7 @@ class signup extends Component {
                 <Grid item sm />
                 <Grid item sm>
                     <img src={AppIcon} alt='social' className={classes.image} />
-                    <p> Signup </p>
+                    <Typography variant="h2" className={classes.pageTitle}>Signup</Typography>
                     <form noValidate onSubmit={this.handleSubmit}>
                         <TextField
                             id="email"
@@ -124,6 +124,7 @@ class signup extends Component {
                                 {errors.general}
                             </Typography>
                         )}
+                        
                         <Button type="submit" 
                             variant="contained" 
                             color="default" 

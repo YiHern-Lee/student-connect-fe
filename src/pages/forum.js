@@ -11,7 +11,7 @@ const styles = (theme) => ({
     ...theme.styles
 })
 
-export class forum extends Component {
+class forum extends Component {
 
     componentDidMount() {
         const forumId = this.props.match.params.forumId;

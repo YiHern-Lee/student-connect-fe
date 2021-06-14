@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 import { ForumDisplay, PostDisplay } from '../components';
-import { List, Typography, Card } from '@material-ui/core';
+import { List, Typography, Card, Button } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { connect } from 'react-redux';
 import { getAllPosts, getAllForums } from '../redux/actions/dataActions';
@@ -26,13 +27,12 @@ const styles = (theme) => ({
 
 class home extends Component {
     componentDidMount() {
-        this.props.getAllForums();
         this.props.getAllPosts();
+        this.props.getAllForums();
     }
 
     render() {
         const { classes, data: { posts, forums } } = this.props;
-        console.log(classes)
         let recentForumsMarkup = forums ? (
             forums.map(forum => <ForumDisplay key={forum.title} forum={ forum } />)
         ) : <p></p>
@@ -58,9 +58,11 @@ class home extends Component {
                     <Grid item sm={4} xs={12}>
                         <Card>
                             <br/>
-                            <Typography p={2} variant='h6' className={ classes.forumHeader }>
-                                <Link to={'/forums'}>Forums</Link>
-                            </Typography>
+                            <Button className={ classes.forumDisplayList } component={Link} to={'/forums'}>
+                                <Typography p={2} variant='h6' className={ classes.forumHeader } color="textPrimary">
+                                    Forums
+                                </Typography>
+                            </ Button>
                             <List className={ classes.list }>{recentForumsMarkup}</List>
                         </Card>
                     </Grid>
@@ -71,6 +73,12 @@ class home extends Component {
             </div>
         );
     }
+}
+
+home.propTypes = {
+    data: PropTypes.object.isRequired,
+    getAllPosts: PropTypes.func.isRequired,
+    getAllForums: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({

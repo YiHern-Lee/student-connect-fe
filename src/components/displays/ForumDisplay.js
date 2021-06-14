@@ -7,18 +7,16 @@ import { Button, ListItem } from '@material-ui/core';
 
 const Link = require("react-router-dom").Link;
 
-const styles = {
-    card: {
-        display: 'flex'
-    }
-}
+const styles = (theme) => ({
+    ...theme.styles
+})
 
 class ForumDisplay extends Component {
     render() {
         const { classes, forum : { faculty, title } } = this.props
         return (
             <div>
-                <Button style={{ textTransform: 'none', width: '350px'}} component={ Link } to={`/forums/${title}`}>
+                <Button className={ classes.forumDisplayList } component={ Link } to={`/forums/${title}`}>
                     <ListItem className={ classes.listItem }>
                             <div>
                                 <Typography className={ classes.forumTitle } variant="h6">

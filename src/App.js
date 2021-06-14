@@ -1,6 +1,6 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { home, login, signup, forumExplore, forum } from "./pages/index";
+import { home, login, signup, forumExplore, forum, post } from "./pages/index";
 import { Navbar } from "./components/index";
 import themeData from './util/theme';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
@@ -51,6 +51,7 @@ function App() {
                     <Route exact path="/" component={ home }></Route>
                     <Route exact path="/login" component={ login }></Route>
                     <Route exact path="/signup" component={ signup }></Route>
+                    <Route exact path="/posts/:postId" component={ post }></Route>
                 </Switch>
             </div>
           </Router>

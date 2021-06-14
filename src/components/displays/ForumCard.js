@@ -21,7 +21,7 @@ export class ForumCard extends Component {
                 <Card className={classes.card}>
                     <CardContent className={classes.content}>
 
-                        <Typography className={classes.postTitle} variant="h5" color="primary" component={Link} to={`/forums/${title}`}>
+                        <Typography className={classes.postTitle} variant="h5" color="textPrimary" component={Link} to={`/forums/${title}`}>
                             { title }
                         </Typography>
                         <Typography paragraph className={classes.postBody} variant="body1">

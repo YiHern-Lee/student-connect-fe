@@ -42,18 +42,6 @@ const Settings = (props) => {
                         </div>
                         }
                     </MenuList>
-                    
-                    {/* <MenuList>
-                        <MenuItem component={ Link } to='/'>
-                            <Typography>Settings</Typography>
-                        </MenuItem>
-                        <MenuItem component={ Link } to='/login'>
-                            <Typography>Login</Typography>
-                        </MenuItem>
-                        <MenuItem component={ Link } to='/signup'>
-                            <Typography>Signup</Typography>
-                        </MenuItem>
-                    </MenuList> */}
                 </Menu>
             </Button>
         </div>

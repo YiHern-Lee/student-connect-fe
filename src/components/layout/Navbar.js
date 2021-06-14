@@ -5,7 +5,7 @@ import { IconButton, Typography, AppBar,
     Toolbar, Button, Avatar } from "@material-ui/core";
 import Settings from "./Settings";
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 import { connect } from 'react-redux';
@@ -18,19 +18,28 @@ const styles = (theme) => ({
 
 const Navbar = (props) => {
     const { classes } = props;
-    const [anchorEl, setAnchorEl] = useState(null);
+
+    const menuRef = useRef();
+    const buttonRef = useRef();
+
+    const [isOpen, setIsOpen] = useState(false);
+    
+    /* const [anchorEl, setAnchorEl] = useState(null); */
 
     const handleClose = () => {
-        setAnchorEl(null);
+        setIsOpen(false);
     }
+    /* const handleClose = () => {
+        setAnchorEl(null);
+    } */
 
-    const openMenu = (event) => {
-        setAnchorEl(event.currentTarget);
+    const openMenu = () => {
+        setIsOpen(true);
     }
 
     return (
         <div>
-            <AppBar position="fixed" zIndex="1400">
+            <AppBar position="fixed">
                 <Toolbar>
                         <div className='nav-container-left'>
                             <Button color="inherit" component={ Link } to="/forums"><Typography>Forums</Typography></Button>
@@ -44,12 +53,13 @@ const Navbar = (props) => {
                             <Typography color="secondary">{ props.username }</Typography></Button> : null}
                         <IconButton color="inherit" component={ Link } to="/"><NotificationsIcon color="secondary"/></IconButton>
                         <IconButton color="inherit" component={ Link } to="/"><HomeIcon color="secondary"/></IconButton>
-                        <IconButton onClick={openMenu} ><SettingsIcon color="secondary"/></IconButton>
+                        <IconButton ref={buttonRef} onClick={openMenu} ><SettingsIcon color="secondary"/></IconButton>
                 </Toolbar>
             </AppBar>
             <Settings id="menu" 
-                anchorEl={ anchorEl } 
-                open={ Boolean(anchorEl) }
+                forwardRef={ menuRef }
+                anchorEl={ buttonRef.current } 
+                open={ isOpen }
                 onClose={ handleClose }
                 authenticated={ props.authenticated } 
                 logout={ props.logout }/>

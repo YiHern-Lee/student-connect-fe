@@ -40,6 +40,10 @@ const themeData = {
             marginTop: '-6px',
             marginBottom: '-7px'
         },
+        forumDisplayList: {
+            textTransform: 'none', 
+            width: '350px'
+        },
         imageSmall: {
             width: 30,
             height: 30,
@@ -55,8 +59,12 @@ const themeData = {
             display: 'flex',
             marginBottom: 20,
         },
+        cardSideCol: {
+            
+        },
         content: {
-            padding: 25
+            padding: '25px 25px 5px 25px',
+            width: '90%'
         },
         image: {
             width: 100,
@@ -90,11 +98,32 @@ const themeData = {
             verticalAlign: 'top'
         },
         forumHeader: {
-            marginLeft: '30px'
+            margin: 'auto auto auto 20px'
         },
         forumGrid: {
             marginLeft: 'auto'
         },
+        commentTime: {
+            position: 'absolute',
+            marginBottom: '0px'
+        },
+        commenterDisplay: {
+            margin: '1px 1px 40px 1px'
+        },
+        commenterDisplayChild: {
+            float: 'left',
+            margin: 'auto 10px auto auto',
+            verticalAlign: 'top'
+        },
+        comment: {
+            padding: 'auto auto 0px auto',
+            width: '90%'
+        },
+        commentList: {
+            float: 'left',
+            margin: 'auto auto 0px auto',
+            verticalAlign: 'top'
+        }
     }
 };
 
