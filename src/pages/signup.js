@@ -9,7 +9,6 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import themeData from '../util/theme';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 // Redux
@@ -21,14 +20,15 @@ const styles = (theme) => ({
 })
 
 class signup extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             email: '',
             password: '',
             confirmPassword: '',
             handle: '',
             errors: {},
+            lastLocation: props.location.state.from ? props.location.state.from : '/'
         };
     }
 
@@ -50,7 +50,8 @@ class signup extends Component {
             confirmPassword: this.state.confirmPassword,
             username: this.state.username
         };
-        this.props.signupUser(newUserData, this.props.history);
+        this.props.signupUser(newUserData);
+        this.props.history.push(this.state.lastLocation);
     }
 
     // fills in the textfield with what you typed in
@@ -134,7 +135,7 @@ class signup extends Component {
                             { loading && (<CircularProgress size={30} className={classes.progress} />) } </Button>
                         <br />
                         <small>
-                            Already have an account? Log in <Link to="/login">here</Link>
+                            Already have an account? Log in <Link to={{ pathname: '/login', state: { from: this.state.lastLocation }}}>here</Link>
                         </small>
 
                     </form>

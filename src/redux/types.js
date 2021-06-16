@@ -16,6 +16,7 @@ export const SET_FORUM_POSTS = 'SET_FORUM_POSTS';
 export const LOADING_DATA = 'LOADING_DATA';
 export const SET_FORUMS = 'SET_FORUMS';
 export const SET_POST = 'SET_POST';
+export const DELETE_POST = 'DELETE_POST'
 
 export const UPVOTE_POSTS = 'UPVOTE_POST';
 export const REMOVE_UPVOTE_POSTS = 'REMOVE_UPVOTE_POST';

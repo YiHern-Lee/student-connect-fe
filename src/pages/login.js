@@ -20,18 +20,22 @@ const styles = (theme) => ({
 })
 
 class login extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             email: '',
             password: '',
-            errors: {}
+            errors: {},
+            lastLocation: props.location.state.from ? props.location.state.from : '/'
         };
     }
 
     componentDidUpdate(prevProps) {
         if (this.props.UI.errors !== prevProps.UI.errors) {
             this.setState({ errors: this.props.UI.errors })
+        }
+        if (this.props.user.authenticated) {
+            this.props.history.goBack();
         }
     }
 
@@ -43,7 +47,8 @@ class login extends Component {
             email: this.state.email,
             password: this.state.password
         };
-        this.props.loginUser(userData, this.props.history);
+        this.props.loginUser(userData);
+        this.props.history.push(this.state.lastLocation);
     }
 
     // fills in the textfield with what you typed in
@@ -56,7 +61,6 @@ class login extends Component {
     render() {
         const { classes, UI: { loading } } = this.props;
         const { errors } = this.state;
-
         return (
             <Grid container className={classes.form}>
                 <Grid item sm />
@@ -102,7 +106,7 @@ class login extends Component {
                         { loading && (<CircularProgress size={30} className={classes.progress} />) } </Button>
                         <br />
                         <small>
-                            Don't have an account? Sign up <Link to="/signup">here</Link>
+                            Don't have an account? Sign up <Link to={{ pathname: '/signup', state: { from: this.state.lastLocation }}}>here</Link>
                         </small>
 
                     </form>

@@ -3,14 +3,16 @@ import React from 'react'
 import { Fade, Menu, MenuItem,
     MenuList, Button, Typography } from '@material-ui/core';
 
-const Link = require("react-router-dom").Link;
+import { Link, useLocation } from 'react-router-dom';
 
 const styles = (theme) => ({
     ...theme.styles
 })
 
 const Settings = (props) => {
+    const location = useLocation();
     const { classes } = props;
+    const currentLocation = location.pathname === '/login' || '/signup' ? '/' : location.pathname;
     return (
         <div>
             <Button>
@@ -33,10 +35,10 @@ const Settings = (props) => {
                             <Typography>Logout</Typography>
                         </MenuItem> :
                         <div>
-                        <MenuItem component={ Link } to='/login'>
+                        <MenuItem component={ Link } to={{ pathname: '/login', state: { from: currentLocation }}}>
                             <Typography>Login</Typography>
                         </MenuItem>
-                        <MenuItem component={ Link } to='/signup'>
+                        <MenuItem component={ Link } to={{ pathname: '/signup', state: { from: currentLocation }}}>
                             <Typography>Signup</Typography>
                         </MenuItem>
                         </div>

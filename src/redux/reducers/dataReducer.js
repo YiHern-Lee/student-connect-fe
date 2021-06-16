@@ -1,6 +1,8 @@
 import { SET_FORUM_POSTS, LOADING_DATA, SET_FORUMS, 
     SET_POSTS, UPVOTE_POSTS, DOWNVOTE_POSTS,
-    REMOVE_UPVOTE_POSTS, REMOVE_DOWNVOTE_POSTS, SET_POST, UPVOTE_COMMENTS, DOWNVOTE_COMMENTS, REMOVE_UPVOTE_COMMENTS, REMOVE_DOWNVOTE_COMMENTS } from '../types';
+    REMOVE_UPVOTE_POSTS, REMOVE_DOWNVOTE_POSTS, 
+    SET_POST, UPVOTE_COMMENTS, DOWNVOTE_COMMENTS, 
+    REMOVE_UPVOTE_COMMENTS, REMOVE_DOWNVOTE_COMMENTS, DELETE_POST } from '../types';
 
 const initialState = {
     info: {},
@@ -65,7 +67,13 @@ export default function(state = initialState, action) {
             state.comments[index] = action.payload;
             return {
                 ...state
-            }
+            };
+        case DELETE_POST:
+            index = state.posts.findIndex(post => post.postId === action.payload);
+            state.posts.splice(index, 1);
+            return {
+                ...state
+            };
         default:
             return state
     }

@@ -9,8 +9,7 @@ import React, { useState, useRef } from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 import { connect } from 'react-redux';
-
-const Link = require("react-router-dom").Link;
+import { Link } from 'react-router-dom';
 
 const styles = (theme) => ({
     ...theme.styles,
@@ -23,15 +22,10 @@ const Navbar = (props) => {
     const buttonRef = useRef();
 
     const [isOpen, setIsOpen] = useState(false);
-    
-    /* const [anchorEl, setAnchorEl] = useState(null); */
 
     const handleClose = () => {
         setIsOpen(false);
     }
-    /* const handleClose = () => {
-        setAnchorEl(null);
-    } */
 
     const openMenu = () => {
         setIsOpen(true);

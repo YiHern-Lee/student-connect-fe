@@ -4,8 +4,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 //MUI
 import Typography from '@material-ui/core/Typography';
 import { Button, ListItem } from '@material-ui/core';
-
-const Link = require("react-router-dom").Link;
+import { Link } from 'react-router-dom';
 
 const styles = (theme) => ({
     ...theme.styles

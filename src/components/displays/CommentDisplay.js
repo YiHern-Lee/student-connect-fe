@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 
 //MUI
 import { Vote } from '../buttons/Vote';
-import { Card, CardContent, Typography, Avatar, Divider, Button, ListItem } from '@material-ui/core';
+import { CardContent, Typography, Avatar, ListItem } from '@material-ui/core';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import dayjs from 'dayjs';
 import { connect } from 'react-redux';
 import { upvoteComment, downvoteComment, unUpvoteComment, unDownvoteComment } from '../../redux/actions/dataActions';
 
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 const styles = (theme) => ({
     ...theme.styles,
@@ -23,8 +23,7 @@ class CommentDisplay extends Component {
     }
     downvotedComment = () => {
         return this.props.user.commentDownvotes && 
-            this.props.user.commentDownvotes
-.find(downvote => downvote === this.props.comment.commentId);
+            this.props.user.commentDownvotes.find(downvote => downvote === this.props.comment.commentId);
     }
     upvoteComment = () => {
         this.props.upvoteComment(this.props.comment.commentId);
@@ -47,16 +46,20 @@ class CommentDisplay extends Component {
             <Vote onClick={ this.upvotedComment() ? this.unUpvoteComment : this.upvoteComment }
                 upvoted={ this.upvotedComment() } up={ true }/>
             :
-            <Link to='/login'><Vote onClick={() => {}} upvoted={ false } up={ true }/></Link>
+            <Link to={{ pathname: '/login', state: { from: this.props.location.pathname }}}>
+                <Vote onClick={() => {}} upvoted={ false } up={ true }/>
+            </Link>
         const downvoteButton = authenticated ? 
             <Vote onClick={ this.downvotedComment() ? this.unDownvoteComment : this.downvoteComment }
                 upvoted={ this.downvotedComment() } up={ false }/>
             :
-            <Link to='/login'><Vote onClick={() => {}} upvoted={ false } up={ false }/></Link>
+            <Link to={{ pathname: '/login', state: { from: this.props.location.pathname }}}>
+                <Vote onClick={() => {}} upvoted={ false } up={ false }/>
+            </Link>
         return (
             <div>
                 <ListItem className={ classes.commentList }>
-                    <CardContent className={ classes.comment }>
+                    <CardContent className={ classes.comment } style={{ paddingBottom: 0, paddingTop: 0 }}>
                         <div className={ classes.commenterDisplay }>
                             <Avatar style={{ width: 30, height: 30}} src={ userImageUrl } className={ classes.commenterDisplayChild}></Avatar> 
                             <div className={ classes.commenterDisplayChild}> 
@@ -70,11 +73,13 @@ class CommentDisplay extends Component {
                         <Typography className={classes.commentBody} variant="body1">
                             { body }
                         </Typography>
-                    </CardContent>
-                    <CardContent>
-                        { upvoteButton }
-                        <Typography variant="h6" style={{ textAlign: 'center' }}>{ votes }</Typography>
-                        { downvoteButton }
+                        <div className={ classes.commentVotes }> 
+                            { upvoteButton }
+                            <Typography variant="subtitle1" style={{ textAlign: 'center', marginTop: '1%' }} className={ classes.commentVotesNumber}>
+                                { votes }
+                            </Typography>
+                            { downvoteButton }
+                        </div>
                     </CardContent>
                 </ListItem>
             </div>
@@ -102,4 +107,4 @@ const mapActionsToProps = {
     unDownvoteComment
 }
 
-export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(CommentDisplay));
+export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(withRouter(CommentDisplay)));

@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
-import axios from 'axios';
 import { ForumDisplay, PostDisplay } from '../components';
 import { List, Typography, Card, Button } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { connect } from 'react-redux';
 import { getAllPosts, getAllForums } from '../redux/actions/dataActions';
-
-const Link = require("react-router-dom").Link;
+import { Link } from 'react-router-dom';
 
 const styles = (theme) => ({
     ...theme.styles,

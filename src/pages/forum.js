@@ -19,16 +19,18 @@ class forum extends Component {
     }
 
     render() {
-        const { classes, data: { info, posts} } = this.props;
+        const { classes, data: { info, posts, loading } } = this.props;
         let forumPostsMarkup = posts ? (
             posts.map(post => <PostDisplay key={post.postId} post={ post } />)
             ) : <p></p>;
         return (
+            
             <div>
                 <Grid container spacing={10} justify='flex-end'>
                     <Grid item sm />
                     <Grid item sm={8} xs={12}>
-                        <Card>
+
+                        { loading ? (<p>Loading</p>) : (<div><Card>
                             <CardContent>
                                 <Typography variant='h5'>
                                     { info.title }
@@ -39,7 +41,7 @@ class forum extends Component {
                             </CardContent>
                         </Card>
                         <br />
-                        {forumPostsMarkup}
+                        {forumPostsMarkup} </div>)}
                     </Grid>
                     <Grid item sm />
                 </Grid>

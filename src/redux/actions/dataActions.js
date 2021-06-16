@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { LOADING_UI, SET_FORUM_POSTS, STOP_LOADING_UI, 
     SET_POSTS, SET_FORUMS, UPVOTE_POSTS, DOWNVOTE_POSTS, 
-      REMOVE_UPVOTE_POSTS, REMOVE_DOWNVOTE_POSTS, SET_POST, LOADING_DATA, UPVOTE_COMMENTS, DOWNVOTE_COMMENTS, REMOVE_UPVOTE_COMMENTS, REMOVE_DOWNVOTE_COMMENTS } from '../types';
+      REMOVE_UPVOTE_POSTS, REMOVE_DOWNVOTE_POSTS, SET_POST, LOADING_DATA, UPVOTE_COMMENTS, DOWNVOTE_COMMENTS, REMOVE_UPVOTE_COMMENTS, REMOVE_DOWNVOTE_COMMENTS, DELETE_POST } from '../types';
 
 export const getForumPosts = (forumId) => (dispatch) => {
     dispatch({ type: LOADING_DATA });
@@ -145,4 +145,14 @@ export const getPost = (postId) => (dispatch) => {
             });
             dispatch({ type: STOP_LOADING_UI });
         }).catch(err => console.log(err))
+}
+
+export const deletePost = (postId) => (dispatch) => {
+    axios.delete(`/posts/${postId}`)
+        .then(() => {
+            dispatch({
+                type: DELETE_POST,
+                payload: postId
+            });
+        }).catch(err => console.log(err));
 }

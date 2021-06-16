@@ -58,6 +58,7 @@ const themeData = {
         card: {
             display: 'flex',
             marginBottom: 20,
+            position: 'relative'
         },
         cardSideCol: {
             
@@ -116,14 +117,21 @@ const themeData = {
             verticalAlign: 'top'
         },
         comment: {
-            padding: 'auto auto 0px auto',
-            width: '90%'
+            width: '90%',
         },
         commentList: {
             float: 'left',
-            margin: 'auto auto 0px auto',
+            margin: '0px auto 0px auto',
             verticalAlign: 'top'
-        }
+        },
+        commentVotes: {
+            display: 'flex',
+            textAlign: 'center',
+            flexDirection: 'row'
+        },
+        commentVotesNumber: {
+            paddingTop: '5px'
+        },
     }
 };
 
