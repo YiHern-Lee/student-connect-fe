@@ -26,7 +26,7 @@ class login extends Component {
             email: '',
             password: '',
             errors: {},
-            lastLocation: props.location.state.from ? props.location.state.from : '/'
+            lastLocation: props.location.state ? props.location.state.from : '/'
         };
     }
 

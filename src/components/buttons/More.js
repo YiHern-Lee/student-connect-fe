@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 //MUI
 import Delete from '../buttons/Delete';
-import { Typography, Button, IconButton, MenuItem, Menu } from '@material-ui/core';
+import { Typography, Button, IconButton, MenuItem, Menu, Tooltip } from '@material-ui/core';
 import { ModeCommentOutlined as CommentOutlined, MoreVertOutlined } from '@material-ui/icons';
 import { connect } from 'react-redux';
 
@@ -22,9 +22,11 @@ const More = (props) => {
     const deleteItem = <Delete postId={ props.postId }/>
     return (
         <div>
-            <IconButton onClick={ handleClick } ref={ buttonRef }>
-                <MoreVertOutlined />
-            </IconButton>
+            <Tooltip title='More' arrow>
+                <IconButton onClick={ handleClick } ref={ buttonRef }>
+                    <MoreVertOutlined />
+                </IconButton>
+            </Tooltip>
             <Menu
                 anchorEl={ buttonRef.current }
                 open={ menuOpen }

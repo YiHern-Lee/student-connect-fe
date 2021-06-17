@@ -132,6 +132,14 @@ const themeData = {
         commentVotesNumber: {
             paddingTop: '5px'
         },
+        submitButton: {
+            position: 'relative',
+        },
+        closeButton: {
+            position: 'absolute',
+            left: '90%',
+            top: '10%'
+        }
     }
 };
 

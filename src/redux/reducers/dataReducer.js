@@ -2,7 +2,7 @@ import { SET_FORUM_POSTS, LOADING_DATA, SET_FORUMS,
     SET_POSTS, UPVOTE_POSTS, DOWNVOTE_POSTS,
     REMOVE_UPVOTE_POSTS, REMOVE_DOWNVOTE_POSTS, 
     SET_POST, UPVOTE_COMMENTS, DOWNVOTE_COMMENTS, 
-    REMOVE_UPVOTE_COMMENTS, REMOVE_DOWNVOTE_COMMENTS, DELETE_POST } from '../types';
+    REMOVE_UPVOTE_COMMENTS, REMOVE_DOWNVOTE_COMMENTS, DELETE_POST, CREATE_POST } from '../types';
 
 const initialState = {
     info: {},
@@ -73,6 +73,14 @@ export default function(state = initialState, action) {
             state.posts.splice(index, 1);
             return {
                 ...state
+            };
+        case CREATE_POST:
+            return {
+                ...state,
+                posts: [ 
+                    action.payload,
+                    ...state.posts
+                ]
             };
         default:
             return state

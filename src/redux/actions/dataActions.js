@@ -1,7 +1,10 @@
 import axios from 'axios';
 import { LOADING_UI, SET_FORUM_POSTS, STOP_LOADING_UI, 
     SET_POSTS, SET_FORUMS, UPVOTE_POSTS, DOWNVOTE_POSTS, 
-      REMOVE_UPVOTE_POSTS, REMOVE_DOWNVOTE_POSTS, SET_POST, LOADING_DATA, UPVOTE_COMMENTS, DOWNVOTE_COMMENTS, REMOVE_UPVOTE_COMMENTS, REMOVE_DOWNVOTE_COMMENTS, DELETE_POST } from '../types';
+      REMOVE_UPVOTE_POSTS, REMOVE_DOWNVOTE_POSTS, SET_POST, 
+      LOADING_DATA, UPVOTE_COMMENTS, DOWNVOTE_COMMENTS, 
+      REMOVE_UPVOTE_COMMENTS, REMOVE_DOWNVOTE_COMMENTS, DELETE_POST, 
+      CREATE_POST, SET_ERRORS, CLEAR_ERRORS } from '../types';
 
 export const getForumPosts = (forumId) => (dispatch) => {
     dispatch({ type: LOADING_DATA });
@@ -155,4 +158,21 @@ export const deletePost = (postId) => (dispatch) => {
                 payload: postId
             });
         }).catch(err => console.log(err));
+}
+
+export const createPost = (newPost) => (dispatch) => {
+    dispatch({ type: LOADING_UI });
+    axios.post(`/posts/${newPost.forum}`, { body: newPost.body, title: newPost.title })
+        .then(res => {
+            dispatch({
+                type: CREATE_POST,
+                payload: res.data
+            });
+            dispatch({ type: CLEAR_ERRORS });
+        }).catch(err => {
+            dispatch({ 
+                type: SET_ERRORS,
+                payload: err.response.data
+            });
+        })
 }

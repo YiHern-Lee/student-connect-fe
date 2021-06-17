@@ -4,10 +4,9 @@ import PropTypes from 'prop-types';
 
 //MUI
 import { Vote } from '../buttons/Vote';
-import Delete from '../buttons/Delete';
 import More from '../buttons/More';
-import { Card, CardContent, Typography, Avatar, Divider, Button, IconButton, MenuItem } from '@material-ui/core';
-import { Menu, ModeCommentOutlined as CommentOutlined, MoreVertOutlined } from '@material-ui/icons';
+import { Card, CardContent, Typography, Avatar, Divider, Button, Tooltip } from '@material-ui/core';
+import { ModeCommentOutlined as CommentOutlined } from '@material-ui/icons';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import dayjs from 'dayjs';
 import { connect } from 'react-redux';
@@ -72,9 +71,6 @@ class PostDisplay extends Component {
             <Link to={{ pathname: '/login', state: { from: this.props.location.pathname }}}>
                 <Vote onClick={() => {}} upvoted={ false } up={ false }/>
             </Link>
-        /* const deleteItem = authenticated && username === credentials.username ? (
-            <Delete postId={ postId }/>
-        ) : null; */
         return (
             <div>
                 <Card className={classes.card}>
@@ -98,22 +94,18 @@ class PostDisplay extends Component {
                         </Typography>
                         <Divider />
                         <div style={{ display: 'flex' }}>
-                        <Button component={ Link } to={`/posts/${postId}`}><CommentOutlined style={{ fontSize: 20 }}/><Typography variant="subtitle2"> 
-                            &nbsp;{ commentCount } Comments</Typography>
-                        </Button>
+                        <Tooltip title='View comments' arrow>
+                            <Button component={ Link } to={`/posts/${postId}`}><CommentOutlined style={{ fontSize: 20 }}/><Typography variant="subtitle2"> 
+                                &nbsp;{ commentCount } Comments</Typography>
+                            </Button>
+                        </Tooltip>
                         &nbsp;&nbsp;&nbsp;
                         { upvoteButton }
-                        <Typography variant="h6" style={{ textAlign: 'center', marginTop: '1%' }}>{ votes }</Typography>
+                        <Typography variant="h6" style={{ textAlign: 'center', marginTop: '1.3%' }}>{ votes }</Typography>
                         <div>{ downvoteButton }</div>
                         </div>
                     </CardContent>
-                    {/* <CardContent>
-                        { upvoteButton }
-                        <Typography variant="h6" style={{ textAlign: 'center' }}>{ votes }</Typography>
-                        { downvoteButton }
-                    </CardContent> */}
                     <CardContent>
-                        {/* { deleteItem } */}
                         <More authenticated={ authenticated } 
                             username={ username } 
                             credentials={ credentials }
