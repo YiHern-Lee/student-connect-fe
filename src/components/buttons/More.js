@@ -1,14 +1,8 @@
 import React, { useRef, useState } from 'react'
-import withStyles from '@material-ui/core/styles/withStyles';
-import PropTypes from 'prop-types';
 
 //MUI
-import Delete from '../buttons/Delete';
-import { Typography, Button, IconButton, MenuItem, Menu, Tooltip } from '@material-ui/core';
-import { ModeCommentOutlined as CommentOutlined, MoreVertOutlined } from '@material-ui/icons';
-import { connect } from 'react-redux';
-
-import { Link, withRouter } from 'react-router-dom';
+import { Button, IconButton, MenuItem, Menu, Tooltip } from '@material-ui/core';
+import { MoreVertOutlined } from '@material-ui/icons';
 
 const More = (props) => {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -19,7 +13,7 @@ const More = (props) => {
         setMenuOpen(false);
     };
     const buttonRef = useRef();
-    const deleteItem = <Delete postId={ props.postId }/>
+    const deleteComponent = props.deleteComponent;
     return (
         <div>
             <Tooltip title='More' arrow>
@@ -38,9 +32,9 @@ const More = (props) => {
                     </Button>
                 </MenuItem>
                 { props.authenticated && props.username === props.credentials.username ? 
-                    <MenuItem>
-                        { deleteItem }
-                    </MenuItem> : null}
+                    (<MenuItem>
+                        { deleteComponent }
+                    </MenuItem>) : null}
             </Menu>
         </div>
     )

@@ -29,7 +29,7 @@ const themeData = {
             marginBottom: '0px'
         },
         posterDisplay: {
-            margin: '1px 1px 60px 1px'
+            margin: '1px 1px 50px 1px'
         },
         posterDisplayChild: {
             float: 'left',
@@ -43,6 +43,9 @@ const themeData = {
         forumDisplayList: {
             textTransform: 'none', 
             width: '350px'
+        },
+        postForum: {
+            float: 'right'
         },
         imageSmall: {
             width: 30,
@@ -134,11 +137,23 @@ const themeData = {
         },
         submitButton: {
             position: 'relative',
+            float: 'right',
+            marginTop: '5%'
         },
         closeButton: {
             position: 'absolute',
             left: '90%',
-            top: '10%'
+            top: '3%'
+        },
+        commentForm: {
+            width: '80%',
+            position: 'relative',
+            margin: '10px auto 10px auto'
+        },
+        commentAvatar: {
+            position: 'absolute',
+            left: '3.5%',
+            top: '35%'
         }
     }
 };

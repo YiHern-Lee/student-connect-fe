@@ -3,9 +3,10 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types';
 
 //MUI
+import DeletePostInPost from '../buttons/DeletePostInPost';
 import { Vote } from '../buttons/Vote';
 import More from '../buttons/More';
-import { Card, CardContent, Typography, Avatar, Divider, Button, Tooltip } from '@material-ui/core';
+import { Card, CardContent, Typography, Avatar, Divider, Button, Tooltip, List, TextField } from '@material-ui/core';
 import { ModeCommentOutlined as CommentOutlined } from '@material-ui/icons';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import dayjs from 'dayjs';
@@ -13,13 +14,12 @@ import { connect } from 'react-redux';
 import { upvotePost, downvotePost, unUpvotePost, unDownvotePost } from '../../redux/actions/dataActions';
 
 import { Link, withRouter } from 'react-router-dom';
-import DeletePost from '../buttons/DeletePost';
 
 const styles = (theme) => ({
     ...theme.styles,
 })
 
-class PostDisplay extends Component {
+class PostComponent extends Component {
     constructor(props) {
         super(props);
         this.buttonRef = React.createRef();
@@ -57,7 +57,8 @@ class PostDisplay extends Component {
         dayjs.extend(relativeTime);
         const { classes, post : { title, body, username, createdAt, userImageUrl, 
             votes, commentCount, postId, forum }, 
-            user: { authenticated, credentials }} = this.props;
+            user: { authenticated, credentials },
+            comments } = this.props;
         const upvoteButton = authenticated ? 
             <Vote onClick={ this.upvotedPost() ? this.unUpvotePost : this.upvotePost }
                 upvoted={ this.upvotedPost() } up={ true }/>
@@ -91,18 +92,15 @@ class PostDisplay extends Component {
                         <Typography className={classes.postTitle} variant="h5">
                             { title }
                         </Typography>
-                        <div style={{ maxHeight: '200px', overflow: 'hidden', WebkitMaskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)', maskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)' }}>
-                            <Typography paragraph className={classes.postBody} variant="body1">
-                                { body }
-                            </Typography>
-                        </div>
+                        <Typography paragraph className={classes.postBody} variant="body1">
+                            { body }
+                        </Typography>
                         <Divider />
                         <div style={{ display: 'flex' }}>
-                        <Tooltip title='View comments' arrow>
-                            <Button component={ Link } to={`/posts/${postId}`}><CommentOutlined style={{ fontSize: 20 }}/><Typography variant="subtitle2"> 
-                                &nbsp;{ commentCount } Comments</Typography>
-                            </Button>
-                        </Tooltip>
+                        <Button>
+                        <CommentOutlined style={{ fontSize: 20 }}/><Typography variant="subtitle2"> 
+                            &nbsp;{ commentCount } Comments</Typography>
+                        </Button>
                         &nbsp;&nbsp;&nbsp;
                         { upvoteButton }
                         <Typography variant="h6" style={{ textAlign: 'center', marginTop: '1.3%' }}>{ votes }</Typography>
@@ -114,7 +112,7 @@ class PostDisplay extends Component {
                             username={ username } 
                             credentials={ credentials }
                             postId={ postId }
-                            deleteComponent={<DeletePost postId={ postId } forum={ forum } />} />
+                            deleteComponent={ <DeletePostInPost postId={ postId } history={ this.props.history }/> }/>
                     </CardContent>
                 </Card>
             </div>
@@ -122,7 +120,7 @@ class PostDisplay extends Component {
     }
 }
 
-PostDisplay.propTypes = {
+PostComponent.propTypes = {
     user: PropTypes.object.isRequired,
     upvotePost: PropTypes.func.isRequired,
     downvotePost: PropTypes.func.isRequired,
@@ -141,4 +139,4 @@ const mapActionsToProps = {
     unDownvotePost
 }
 
-export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(withRouter(PostDisplay)));
+export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(withRouter(PostComponent)));

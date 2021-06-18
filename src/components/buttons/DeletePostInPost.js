@@ -3,8 +3,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types';
 
 //MUI
-import { IconButton, Dialog, DialogTitle, Typography, DialogActions, Button } from '@material-ui/core';
-import { DeleteOutline } from '@material-ui/icons';
+import { Dialog, DialogTitle, Typography, DialogActions, Button } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { deletePost } from '../../redux/actions/dataActions';
 
@@ -12,7 +11,7 @@ const styles = (theme) => ({
     ...theme.styles
 })
 
-class Delete extends Component {
+class DeletePostInPost extends Component {
     state = {
         open: false
     };
@@ -25,10 +24,10 @@ class Delete extends Component {
     deletePost = () => {
         this.props.deletePost(this.props.postId);
         this.setState({ open: false });
+        this.props.history.goBack();
     }
     render() {
         const { classes } = this.props;
-
         return (
             <Fragment>
                 <Button onClick={ this.handleOpen }
@@ -41,7 +40,7 @@ class Delete extends Component {
                     maxWidth='sm'>
                         <DialogTitle>
                             <Typography>
-                                Are you sure you want to delete post?
+                                Are you sure you want to delete this post?
                             </Typography>
                         </DialogTitle>
                         <DialogActions>
@@ -58,10 +57,10 @@ class Delete extends Component {
     }
 }
 
-Delete.propTypes = {
+DeletePostInPost.propTypes = {
     deletePost: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,
     postId: PropTypes.string.isRequired
 }
 
-export default connect(null, { deletePost })(withStyles(styles)(Delete));
+export default connect(null, { deletePost })(withStyles(styles)(DeletePostInPost));

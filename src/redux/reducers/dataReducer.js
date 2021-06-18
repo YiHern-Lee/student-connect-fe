@@ -1,8 +1,10 @@
+import { post } from '../../pages';
 import { SET_FORUM_POSTS, LOADING_DATA, SET_FORUMS, 
     SET_POSTS, UPVOTE_POSTS, DOWNVOTE_POSTS,
     REMOVE_UPVOTE_POSTS, REMOVE_DOWNVOTE_POSTS, 
     SET_POST, UPVOTE_COMMENTS, DOWNVOTE_COMMENTS, 
-    REMOVE_UPVOTE_COMMENTS, REMOVE_DOWNVOTE_COMMENTS, DELETE_POST, CREATE_POST } from '../types';
+    REMOVE_UPVOTE_COMMENTS, REMOVE_DOWNVOTE_COMMENTS, DELETE_POST, 
+    CREATE_POST, CREATE_COMMENT, DELETE_COMMENT } from '../types';
 
 const initialState = {
     info: {},
@@ -74,6 +76,12 @@ export default function(state = initialState, action) {
             return {
                 ...state
             };
+        case DELETE_COMMENT:
+            index = state.comments.findIndex(comment => comment.commentId === action.payload);
+            state.comments.splice(index, 1);
+            return {
+                ...state
+            };
         case CREATE_POST:
             return {
                 ...state,
@@ -82,6 +90,18 @@ export default function(state = initialState, action) {
                     ...state.posts
                 ]
             };
+        case CREATE_COMMENT:
+            if (state.post.postId === action.payload.postId) state.post = {
+                ...state.post,
+                commentCount: state.post.commentCount + 1
+            };
+            return {
+                ...state,
+                comments: [
+                    action.payload,
+                    ...state.comments
+                ]
+            }
         default:
             return state
     }

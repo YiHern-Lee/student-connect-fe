@@ -4,7 +4,7 @@ import { LOADING_UI, SET_FORUM_POSTS, STOP_LOADING_UI,
       REMOVE_UPVOTE_POSTS, REMOVE_DOWNVOTE_POSTS, SET_POST, 
       LOADING_DATA, UPVOTE_COMMENTS, DOWNVOTE_COMMENTS, 
       REMOVE_UPVOTE_COMMENTS, REMOVE_DOWNVOTE_COMMENTS, DELETE_POST, 
-      CREATE_POST, SET_ERRORS, CLEAR_ERRORS } from '../types';
+      CREATE_POST, SET_ERRORS, CLEAR_ERRORS, CREATE_COMMENT, DELETE_COMMENT } from '../types';
 
 export const getForumPosts = (forumId) => (dispatch) => {
     dispatch({ type: LOADING_DATA });
@@ -131,6 +131,7 @@ export const unUpvoteComment = (commentId) => (dispatch) => {
 export const unDownvoteComment = (commentId) => (dispatch) => {
     axios.post(`/comments/${commentId}/undownvote`)
         .then(res => {
+            console.log(res.data);
             dispatch({
                 type: REMOVE_DOWNVOTE_COMMENTS,
                 payload: res.data
@@ -160,6 +161,16 @@ export const deletePost = (postId) => (dispatch) => {
         }).catch(err => console.log(err));
 }
 
+export const deleteComment = (commentId) => (dispatch) => {
+    axios.delete(`/comments/${commentId}`)
+        .then(() => {
+            dispatch({
+                type: DELETE_COMMENT,
+                payload: commentId
+            });
+        }).catch(err => console.log(err));
+}
+
 export const createPost = (newPost) => (dispatch) => {
     dispatch({ type: LOADING_UI });
     axios.post(`/posts/${newPost.forum}`, { body: newPost.body, title: newPost.title })
@@ -175,4 +186,25 @@ export const createPost = (newPost) => (dispatch) => {
                 payload: err.response.data
             });
         })
+}
+
+export const createComment = (newComment) => (dispatch) => {
+    dispatch({ type: LOADING_UI });
+    axios.post(`/posts/${newComment.postId}/comment`, { body: newComment.body })
+        .then(res => {
+            dispatch({
+                type: CREATE_COMMENT,
+                payload: res.data
+            });
+            dispatch({ type: CLEAR_ERRORS });
+        }).catch(err => {
+            dispatch({
+                type: SET_ERRORS,
+                payload: err.response.data
+            });
+        });
+}
+
+export const clearErrors = () => (dispatch) => {
+    dispatch({ type: CLEAR_ERRORS });
 }

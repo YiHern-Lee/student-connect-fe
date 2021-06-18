@@ -36,6 +36,9 @@ class signup extends Component {
         if (this.props.UI.errors !== prevProps.UI.errors) {
             this.setState({ errors: this.props.UI.errors })
         }
+        if (this.props.user.authenticated) {
+            this.props.history.goBack();
+        }
     }
 
     // upon submitting the email and password
@@ -50,8 +53,7 @@ class signup extends Component {
             confirmPassword: this.state.confirmPassword,
             username: this.state.username
         };
-        this.props.signupUser(newUserData);
-        this.props.history.push(this.state.lastLocation);
+        this.props.signupUser(newUserData, this.props.history, this.state.lastLocation);
     }
 
     // fills in the textfield with what you typed in

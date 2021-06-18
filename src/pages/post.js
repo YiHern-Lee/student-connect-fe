@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { PostDisplay, CommentDisplay } from '../components';
+import { CommentDisplay, PostComponent } from '../components';
 import { Card, Grid, CardContent, Typography, List } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
+import CommentComponent from '../components/displays/CommentComponent';
 
 import { connect } from 'react-redux';
 import { getPost } from '../redux/actions/dataActions';
@@ -20,20 +21,14 @@ class post extends Component {
 
     render() {
         const { classes, data: { post, comments } } = this.props;
-        let postDisplay = <PostDisplay key={post.postId} post={ post } />;
-        let commentDisplay = comments ? (comments.map(comment => <CommentDisplay key={comment.commentId} comment={ comment }/>)) 
-            : <p></p>
+        let postDisplay = <PostComponent key={post.postId} post={ post } comments={ comments } />;
         return (
             <div>
                 <Grid container spacing={10} justify='flex-end'>
                     <Grid item sm />
                     <Grid item sm={8} xs={12}>
                         { postDisplay }
-                        <Card>
-                        <List>
-                        { commentDisplay }
-                        </List>
-                        </Card>
+                        <CommentComponent comments={ comments } postId={ post.postId } />
                     </Grid>
                     <Grid item sm />
                 </Grid>

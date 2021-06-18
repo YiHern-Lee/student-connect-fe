@@ -8,7 +8,7 @@ import { IconButton, Button, TextField, Dialog,
     DialogContent, DialogTitle, CircularProgress, Tooltip } from '@material-ui/core';
 import { Add as AddIcon, Close as CloseIcon } from '@material-ui/icons';
 import { connect } from 'react-redux';
-import { createPost } from '../../redux/actions/dataActions';
+import { createPost, clearErrors } from '../../redux/actions/dataActions';
 
 const styles = (theme) => ({
     ...theme.styles
@@ -32,7 +32,7 @@ class CreatePost extends Component {
         }
         if (prevProps.UI.errors || prevProps.UI.loading) {
             if (!this.props.UI.errors && !this.props.UI.loading) {
-                this.setState({ title: '', body: ''});
+                this.setState({ title: '', body: '' });
                 this.handleClose();
             }
         }
@@ -43,6 +43,7 @@ class CreatePost extends Component {
     }
 
     handleClose = () => {
+        this.props.clearErrors();
         this.setState({ open: false, errors: {} });
     }
 
@@ -76,7 +77,9 @@ class CreatePost extends Component {
                 <Dialog open={ this.state.open } 
                     onClose={ this.handleClose } 
                     fullWidth maxWidth='sm'>
-                    <CloseIcon onClick={ this.handleClose } className={ classes.closeButton }/>
+                    <IconButton onClick={ this.handleClose } className={ classes.closeButton }>
+                        <CloseIcon/>
+                    </IconButton>
                     <DialogTitle>Create a new post</DialogTitle>
                     <DialogContent>
                         <form onSubmit={ this.handleSubmit }>
@@ -123,6 +126,7 @@ class CreatePost extends Component {
 
 CreatePost.propTypes = {
     createPost: PropTypes.func.isRequired,
+    clearErrors: PropTypes.func.isRequired,
     UI: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired
 };
@@ -132,4 +136,4 @@ const mapStateToProps = (state) => ({
     user: state.user
 });
 
-export default connect(mapStateToProps, { createPost })(withStyles(styles)(withRouter(CreatePost)));
+export default connect(mapStateToProps, { createPost, clearErrors })(withStyles(styles)(withRouter(CreatePost)));

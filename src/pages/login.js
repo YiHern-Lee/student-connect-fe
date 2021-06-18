@@ -47,8 +47,7 @@ class login extends Component {
             email: this.state.email,
             password: this.state.password
         };
-        this.props.loginUser(userData);
-        this.props.history.push(this.state.lastLocation);
+        this.props.loginUser(userData, this.props.history, this.state.lastLocation);
     }
 
     // fills in the textfield with what you typed in
