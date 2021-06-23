@@ -1,10 +1,10 @@
-import { post } from '../../pages';
 import { SET_FORUM_POSTS, LOADING_DATA, SET_FORUMS, 
     SET_POSTS, UPVOTE_POSTS, DOWNVOTE_POSTS,
     REMOVE_UPVOTE_POSTS, REMOVE_DOWNVOTE_POSTS, 
     SET_POST, UPVOTE_COMMENTS, DOWNVOTE_COMMENTS, 
     REMOVE_UPVOTE_COMMENTS, REMOVE_DOWNVOTE_COMMENTS, DELETE_POST, 
-    CREATE_POST, CREATE_COMMENT, DELETE_COMMENT } from '../types';
+    CREATE_POST, CREATE_COMMENT, DELETE_COMMENT, 
+    SET_OTHER_USER_DATA } from '../types';
 
 const initialState = {
     info: {},
@@ -101,6 +101,12 @@ export default function(state = initialState, action) {
                     action.payload,
                     ...state.comments
                 ]
+            }
+        case SET_OTHER_USER_DATA:
+            return {
+                ...state,
+                info: action.payload.userDetails,
+                posts: action.payload.posts
             }
         default:
             return state

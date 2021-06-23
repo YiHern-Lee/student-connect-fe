@@ -4,7 +4,7 @@ import { LOADING_UI, SET_FORUM_POSTS, STOP_LOADING_UI,
       REMOVE_UPVOTE_POSTS, REMOVE_DOWNVOTE_POSTS, SET_POST, 
       LOADING_DATA, UPVOTE_COMMENTS, DOWNVOTE_COMMENTS, 
       REMOVE_UPVOTE_COMMENTS, REMOVE_DOWNVOTE_COMMENTS, DELETE_POST, 
-      CREATE_POST, SET_ERRORS, CLEAR_ERRORS, CREATE_COMMENT, DELETE_COMMENT } from '../types';
+      CREATE_POST, SET_ERRORS, CLEAR_ERRORS, CREATE_COMMENT, DELETE_COMMENT, SET_OTHER_USER_DATA, SET_FOLLOW, SET_UNFOLLOW } from '../types';
 
 export const getForumPosts = (forumId) => (dispatch) => {
     dispatch({ type: LOADING_DATA });
@@ -188,6 +188,16 @@ export const createPost = (newPost) => (dispatch) => {
         })
 }
 
+/* export const createForum = (newForum) => (dispatch) => {
+    dispatch({ type: LOADING_UI });
+    axios.post('/forums', newForum)
+        .then(res => {
+            dispatch({
+                type: CREATE_FORUM
+            })
+        })
+} */
+
 export const createComment = (newComment) => (dispatch) => {
     dispatch({ type: LOADING_UI });
     axios.post(`/posts/${newComment.postId}/comment`, { body: newComment.body })
@@ -205,6 +215,40 @@ export const createComment = (newComment) => (dispatch) => {
         });
 }
 
+export const getUserData = (userId) => (dispatch) => {
+    dispatch({ type: LOADING_DATA });
+    axios.get(`/users/${userId}`)
+        .then(res => {
+            dispatch({ 
+                type: SET_OTHER_USER_DATA,
+                payload: res.data 
+            })
+        }).catch(err => console.log(err))
+}
+
+export const followForum = (forumId) => (dispatch) => {
+    dispatch({ type: LOADING_UI });
+    axios.post('forums/follow', { forumId })
+        .then(res => {
+            dispatch({
+                type: SET_FOLLOW,
+                payload: res.data
+            });
+        }).catch(err => console.log(err));
+}
+
+export const unfollowForum = (forumId) => (dispatch) => {
+    dispatch({ type: LOADING_UI });
+    axios.post('forums/unfollow', { forumId })
+        .then(res => {
+            dispatch({
+                type: SET_UNFOLLOW,
+                payload: res.data
+            });
+        }).catch(err => console.log(err));
+}
+
 export const clearErrors = () => (dispatch) => {
     dispatch({ type: CLEAR_ERRORS });
 }
+

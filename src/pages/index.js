@@ -4,5 +4,7 @@ import signup from "./signup"
 import forumExplore from "./forumExplore"
 import forum from "./forum"
 import post from "./post"
+import profile from "./profile"
+import user from "./user"
 
-export { home, login, signup, forumExplore, forum, post }
+export { home, login, signup, forumExplore, forum, post, profile, user }

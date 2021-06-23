@@ -56,9 +56,9 @@ class PostComponent extends Component {
     render() {
         dayjs.extend(relativeTime);
         const { classes, post : { title, body, username, createdAt, userImageUrl, 
-            votes, commentCount, postId, forum }, 
+            votes, commentCount, postId, forum, userId }, 
             user: { authenticated, credentials },
-            comments } = this.props;
+            } = this.props;
         const upvoteButton = authenticated ? 
             <Vote onClick={ this.upvotedPost() ? this.unUpvotePost : this.upvotePost }
                 upvoted={ this.upvotedPost() } up={ true }/>
@@ -80,8 +80,9 @@ class PostComponent extends Component {
                         <div className={classes.posterDisplay}>
                             <Avatar src={ userImageUrl } className={ classes.posterDisplayChild}></Avatar> 
                             <div className={ classes.posterDisplayChild}> 
-                                <Typography className={ classes.posterDisplayChildTextTop} variant="h6" >
-                                    { username } 
+                                <Typography
+                                    className={ classes.posterDisplayChildTextTop} variant="h6" >
+                                    <Link to={`/users/${userId}`}>{ username }</Link>
                                 </Typography>
                                 <Typography variant="caption" color="textSecondary">
                                     { dayjs(createdAt).fromNow() }

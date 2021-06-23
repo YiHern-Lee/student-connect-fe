@@ -4,5 +4,9 @@ import PostDisplay from "./displays/PostDisplay";
 import ForumCard from './displays/ForumCard';
 import CommentDisplay from "./displays/CommentDisplay";
 import PostComponent from "./displays/PostComponent";
+import CurrentProfileDisplay from "./displays/CurrentProfileDisplay";
+import ProfileDisplay from "./displays/ProfileDisplay";
 
-export { Navbar, ForumDisplay, PostDisplay, ForumCard, CommentDisplay, PostComponent };
+export { Navbar, ForumDisplay, PostDisplay, 
+    ForumCard, CommentDisplay, PostComponent, 
+    CurrentProfileDisplay, ProfileDisplay };

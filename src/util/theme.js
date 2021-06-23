@@ -154,6 +154,30 @@ const themeData = {
             position: 'absolute',
             left: '3.5%',
             top: '35%'
+        },
+        profileImage: {
+            width: 200,
+            height: 200,
+            objectFit: 'cover',
+            maxWidth: '100%',
+            borderRadius: '50%',
+            margin: '2% auto 2% auto'
+        },
+        profileImageWrapper: {
+            textAlign: 'center',
+            position: 'relative',
+        },
+        editImageButton: {
+            position: 'absolute',
+            bottom: '2%',
+            right: '7%'
+        },
+        profileDetails: {
+            textAlign: 'center',
+            position: 'relative'
+        },
+        profile: {
+            padding: '10% 0 10% 0'
         }
     }
 };

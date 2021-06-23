@@ -1,42 +1,52 @@
 import React, { Component } from 'react';
-import Grid from '@material-ui/core/Grid';
-import axios from 'axios';
+import { GridList, GridListTile, Card, CardContent, Typography } from '@material-ui/core';
 import { ForumCard } from '../components';
-import { List } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
+import { connect } from 'react-redux';
+import { getAllForums } from '../redux/actions/dataActions';
 
 const styles = (theme) => ({
     ...theme.styles
 })
 
-class forum extends Component {
-    state = {
-        forums: null,
-    }
+class forumExplore extends Component {
 
     componentDidMount() {
-        axios.get('/forums')
-            .then(res => {
-                this.setState({
-                    forums: res.data
-                });
-            }).catch(err => console.log(err));
-        }
+        this.props.getAllForums();
+    }
     render() {
-        const { classes } = this.props;
-        let recentForumsMarkup = this.state.forums ? (
-            this.state.forums.map(forum => <ForumCard key={forum.title} forum={ forum } />)
+        const { classes, data: { forums }} = this.props;
+        let recentForumsMarkup = forums ? (
+            forums.map(forum => (<GridListTile cols={1} key={forum.title}>
+                    <ForumCard key={forum.title} forum={ forum } />
+                </GridListTile>))
         ) : <p></p>
         return (
             <div>
-                <Grid container spacing={0}>
-                    <Grid item sm={6} xs={8} className={ classes.forumGrid } >
-                        <List className={ classes.list }>{recentForumsMarkup}</List>
-                    </Grid>
-                </Grid> 
+                <Card style={{ marginBottom: '3%' }}>
+                    <CardContent style={{ display: 'flex' }}>
+                        <div style={{ marginRight: 'auto' }}>
+                            <Typography variant="h5">Forums</Typography>
+                        </div>
+                        <div style={{ marginLeft: 'auto' }}>
+                            <typography>Hi</typography>
+                        </div>
+                    </CardContent>
+                </Card>
+                <GridList cellHeight={160} className={ classes.gridList } cols={3} spacing={50}>
+                    {recentForumsMarkup}
+                </GridList> 
             </div>
         )
     }
 }
 
-export default withStyles(styles)(forum);
+const mapStateToProps = (state) => ({
+    data: state.data
+})
+
+const mapActionsToProps = {
+    getAllForums
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(forumExplore));

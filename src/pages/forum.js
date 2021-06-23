@@ -4,9 +4,11 @@ import { Card, Grid, CardContent, Typography } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 import { connect } from 'react-redux';
-import { getForumPosts } from '../redux/actions/dataActions';
+import { getForumPosts, followForum, unfollowForum } from '../redux/actions/dataActions';
 import PropTypes from 'prop-types';
 import CreatePost from '../components/displays/CreatePost';
+import { Follow } from '../components/buttons/Follow';
+import { Link } from 'react-router-dom';
 
 const styles = (theme) => ({
     ...theme.styles
@@ -19,11 +21,31 @@ class forum extends Component {
         this.props.getForumPosts(forumId);
     }
 
+    follow = (forumId) => {
+        this.props.followForum(forumId);
+    }
+
+    unfollow = (forumId) => {
+        this.props.unfollowForum(forumId);
+    }
+
+    followedForum = () => {
+        return this.props.user.forumFollows && 
+            this.props.user.forumFollows.find(forum => forum === this.props.data.info.title);
+    }
+
     render() {
-        const { classes, data: { info, posts, loading } } = this.props;
+        const { classes, data: { info, posts, loading }, user: { authenticated } } = this.props;
         let forumPostsMarkup = posts ? (
             posts.map(post => <PostDisplay key={post.postId} post={ post } />)
             ) : <p></p>;
+        const followButton = authenticated ? 
+        <Follow onClick={ this.followedForum() ? () => this.unfollow(info.title) : () => this.follow(info.title) }
+            followed={ this.followedForum() }/>
+        :
+        <Link to={{ pathname: '/login', state: { from: this.props.location.pathname }}}>
+            <Follow onClick={() => {}} followed={ false }/>
+        </Link>
         return (
             
             <div>
@@ -44,11 +66,19 @@ class forum extends Component {
                                         </Typography>
                                     </div>
                                     <div style={{ marginLeft: 'auto' }}>
+                                        { followButton }
+                                    </div>
+                                </CardContent>
+                            </Card>
+                            <br />
+                            <Card>
+                                <CardContent style={{ display: 'flex', padding: '0px 10px 0px 0px' }}>
+                                    <div style={{ marginLeft: 'auto' }}>
                                         <CreatePost id={ info.title }/>
                                     </div>
                                 </CardContent>
                             </Card>
-                           <br />
+                            <br />
                             {forumPostsMarkup} 
                             </div>)}
                     </Grid>
@@ -65,7 +95,14 @@ forum.propTypes = {
 }
 
 const mapStateToProps = state => ({
-    data: state.data
+    data: state.data,
+    user: state.user
 })
 
-export default connect(mapStateToProps, { getForumPosts })(withStyles(styles)(forum));
+const mapActionsToProps = {
+    getForumPosts,
+    followForum,
+    unfollowForum
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(forum));

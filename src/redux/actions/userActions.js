@@ -1,12 +1,13 @@
 import axios from 'axios';
-import { SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_UNAUTHENTICATED } from '../types';
+import { SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_UNAUTHENTICATED, LOADING_USER } from '../types';
+import { getUserData } from './dataActions';
 
 export const loginUser = (userData, history, lastLocation) => (dispatch) => {
     dispatch({ type: LOADING_UI });
     axios.post('/login', userData)
             .then(res => {
                 setAuthorizationHeader(res.data.token);
-                dispatch(getUserData());
+                dispatch(getCurrentUserData());
                 dispatch({ type: CLEAR_ERRORS });
                 history.push(lastLocation);
             })
@@ -24,7 +25,7 @@ export const signupUser = (newUserData, history, lastLocation) => (dispatch) => 
     axios.post('/signup', newUserData)
             .then(res => {
                 setAuthorizationHeader(res.data.token);
-                dispatch(getUserData());
+                dispatch(getCurrentUserData());
                 dispatch({ type: CLEAR_ERRORS });
                 history.push(lastLocation);
             })
@@ -43,7 +44,7 @@ export const logoutUser = () => (dispatch) => {
     dispatch({ type: SET_UNAUTHENTICATED });
 }
 
-export const getUserData = () => (dispatch) => {
+export const getCurrentUserData = () => (dispatch) => {
     axios.get('/users')
         .then(res => {
             dispatch({
@@ -51,6 +52,24 @@ export const getUserData = () => (dispatch) => {
                 payload: res.data
             })
         }).catch(err => console.error(err));
+}
+
+export const editUserDetails = (userDetails) => (dispatch) => {
+    dispatch({ type: LOADING_USER });
+    axios
+      .post('/users', userDetails)
+      .then(() => {
+        dispatch(getCurrentUserData());
+      })
+      .catch((err) => console.log(err));
+}
+
+export const uploadImage = (formData) => (dispatch) => {
+    dispatch({ type: LOADING_USER });
+    axios.post('/users/image', formData)
+        .then(res => {
+            dispatch(getUserData());
+        }).catch(err => console.log(err));
 }
 
 const setAuthorizationHeader = (token) => {

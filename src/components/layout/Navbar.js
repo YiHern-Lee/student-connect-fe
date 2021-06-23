@@ -40,7 +40,7 @@ const Navbar = (props) => {
                             <Button color="inherit" component={ Link } to="/"><Typography>Marketplaces</Typography></Button>
                             <Button color="inherit" component={ Link } to="/"><Typography>Groups</Typography></Button>
                         </div>
-                        { props.authenticated ? <Button style={{ textTransform: 'none'}}>
+                        { props.authenticated ? <Button style={{ textTransform: 'none'}} component={Link} to={`/users/${props.userId}`}>
                             <Avatar className={ classes.imageSmall } 
                                 alt={ props.username } 
                                 src={ props.userImageUrl }></Avatar>
@@ -64,7 +64,8 @@ const Navbar = (props) => {
 const mapStateToProps = (state) => ({
     authenticated: state.user.authenticated,
     username: state.user.credentials.username,
-    userImageUrl: state.user.credentials.userImageUrl
+    userImageUrl: state.user.credentials.userImageUrl,
+    userId: state.user.credentials.userId
 });
 
 export default connect(mapStateToProps)(withStyles(styles)(Navbar));

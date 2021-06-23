@@ -1,6 +1,7 @@
 import { SET_USER, SET_AUTHENTICATED, SET_UNAUTHENTICATED,
     UPVOTE_POSTS, DOWNVOTE_POSTS, REMOVE_UPVOTE_POSTS, REMOVE_DOWNVOTE_POSTS, 
-    UPVOTE_COMMENTS, DOWNVOTE_COMMENTS, REMOVE_UPVOTE_COMMENTS, REMOVE_DOWNVOTE_COMMENTS } from '../types';
+    UPVOTE_COMMENTS, DOWNVOTE_COMMENTS, REMOVE_UPVOTE_COMMENTS, 
+    REMOVE_DOWNVOTE_COMMENTS, SET_FOLLOW, SET_UNFOLLOW } from '../types';
 
 const initialState = {
     authenticated: false,
@@ -8,7 +9,8 @@ const initialState = {
     upvotes: [],
     downvotes: [],
     commentUpvotes: [],
-    commentDownvotes: []
+    commentDownvotes: [],
+    forumFollows: []
 }
 
 export default function(state = initialState, action) {
@@ -73,6 +75,17 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 commentDownvotes: state.commentDownvotes.filter(downvote => downvote !== action.payload.commentId)
+            };
+        case SET_FOLLOW:
+            state.forumFollows.push(action.payload.forumId);
+            return {
+                ...state,
+            };
+        case SET_UNFOLLOW:
+            index = state.forumFollows.findIndex(forum => forum === action.payload.forumId);
+            if (index > -1) state.forumFollows.splice(index, 1);
+            return {
+                ...state,
             };
         default: 
             return state;

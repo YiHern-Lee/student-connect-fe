@@ -56,7 +56,7 @@ class PostDisplay extends Component {
     render() {
         dayjs.extend(relativeTime);
         const { classes, post : { title, body, username, createdAt, userImageUrl, 
-            votes, commentCount, postId, forum }, 
+            votes, commentCount, postId, forum, userId }, 
             user: { authenticated, credentials }} = this.props;
         const upvoteButton = authenticated ? 
             <Vote onClick={ this.upvotedPost() ? this.unUpvotePost : this.upvotePost }
@@ -80,7 +80,7 @@ class PostDisplay extends Component {
                             <Avatar src={ userImageUrl } className={ classes.posterDisplayChild}></Avatar> 
                             <div className={ classes.posterDisplayChild}> 
                                 <Typography className={ classes.posterDisplayChildTextTop} variant="h6" >
-                                    { username } 
+                                    <Link to={`/users/${userId}`}>{ username } </Link>
                                 </Typography>
                                 <Typography variant="caption" color="textSecondary">
                                     { dayjs(createdAt).fromNow() }
@@ -91,11 +91,13 @@ class PostDisplay extends Component {
                         <Typography className={classes.postTitle} variant="h5">
                             { title }
                         </Typography>
-                        <div style={{ maxHeight: '200px', overflow: 'hidden', WebkitMaskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)', maskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)' }}>
-                            <Typography paragraph className={classes.postBody} variant="body1">
-                                { body }
-                            </Typography>
-                        </div>
+                        <Link to={`/posts/${postId}`}>
+                            <div style={{ maxHeight: '200px', overflow: 'hidden', WebkitMaskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)', maskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)' }}>
+                                <Typography paragraph className={classes.postBody} variant="body1">
+                                    { body }
+                                </Typography>
+                            </div>
+                        </Link>
                         <Divider />
                         <div style={{ display: 'flex' }}>
                         <Tooltip title='View comments' arrow>

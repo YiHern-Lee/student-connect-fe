@@ -1,6 +1,6 @@
 import React from 'react';
 import { IconButton, Tooltip } from '@material-ui/core';
-import { PlayArrow as PlayArrowIcon, PlayArrowOutlined, Forward as ForwardIcon, ForwardOutlined } from '@material-ui/icons';
+import { Forward as ForwardIcon, ForwardOutlined } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 
 export const Vote = (props) => {
