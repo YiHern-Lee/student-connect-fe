@@ -4,14 +4,10 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 
-import { Button, Link as MuiLink,  Typography, Paper, Tooltip } from '@material-ui/core';
+import { Link as MuiLink,  Typography, Paper } from '@material-ui/core';
 import ClassIcon from '@material-ui/icons/Class';
-import MyButton from '../../util/MyButton';
-import EditDetails from './EditDetails';
 
 import CalendarToday from '@material-ui/icons/CalendarToday';
-import EditIcon from '@material-ui/icons/Edit';
-import KeyboardReturn from '@material-ui/icons/KeyboardReturn';
 
 const styles = (theme) => ({
     ...theme.styles
@@ -33,7 +29,7 @@ class ProfileDisplay extends Component {
                             <MuiLink
                                 component={Link}
                                 to={`/users/${userId}`}
-                                color="primary"
+                                color="secondary"
                                 variant="h5">
                                 @{username}
                             </MuiLink>
@@ -44,18 +40,18 @@ class ProfileDisplay extends Component {
                             <br />
                             {major ? (
                                 <Fragment>
-                                    <ClassIcon color="primary" />&nbsp;&nbsp;
+                                    <ClassIcon color="secondary" />&nbsp;&nbsp;
                                     <span style={{ paddingBottom: '10px' }}>{major}</span>
                                     <br />
                                 </Fragment>
                             ) : 
                             <Fragment>
-                                    <ClassIcon color="primary" />&nbsp;&nbsp;
+                                    <ClassIcon color="secondary" />&nbsp;&nbsp;
                                     <span style={{ paddingBottom: '10px' }}>No major indicated</span>
                                     <br />
                                 </Fragment>}
                             <br />
-                            <CalendarToday color="primary" />&nbsp;&nbsp;
+                            <CalendarToday color='secondary' />&nbsp;&nbsp;
                             <span>Joined {dayjs(createdAt).format('MMM YYYY')}</span>
                         </div>
                     </div>

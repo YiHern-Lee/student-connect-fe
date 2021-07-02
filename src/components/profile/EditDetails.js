@@ -2,12 +2,11 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
-import MyButton from '../../util/MyButton';
 // Redux stuff
 import { connect } from 'react-redux';
 import { editUserDetails } from '../../redux/actions/userActions';
 // MUI Stuff
-import { Select, Input, InputLabel, MenuItem } from '@material-ui/core';
+import { Select, Input, IconButton, Tooltip, Typography, InputLabel } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -30,7 +29,7 @@ class EditDetails extends Component {
   mapUserDetailsToState = (credentials) => {
     this.setState({
       bio: credentials.bio ? credentials.bio : '',
-      major: credentials.major ? credentials.major : []
+      major: credentials.major ? credentials.major : ''
     });
   };
   handleOpen = () => {
@@ -46,8 +45,6 @@ class EditDetails extends Component {
   }
 
   handleChange = (event) => {
-    console.log(event.target.value)
-    console.log(event.target.name)
     this.setState({
       [event.target.name]: event.target.value
     });
@@ -61,17 +58,19 @@ class EditDetails extends Component {
     this.handleClose();
   };
   render() {
-    const majors = ['Computer Science', 'Mathematics', 'FASS', 'BBA', 'BBAC'];
+    /* const majors = {
+      "School of Computing": ["Computer Science", "Business Analytics"],
+      "Science": ['Pharmaceutical Science', 'Statistics']
+    } */
+    const majors = ['Computer Science', 'Business Analytics', 'Statistics', 'Gonna add all the majors']
     const { classes } = this.props;
     return (
       <Fragment>
-        <MyButton
-          tip="Edit Details"
-          onClick={this.handleOpen}
-          btnClassName={classes.button}
-        >
-          <EditIcon color="primary" />
-        </MyButton>
+        <Tooltip title="Edit Details" arrow>
+        <IconButton onClick={this.handleOpen} className={classes.button}>
+          <EditIcon color="secondary" />
+        </IconButton>
+        </Tooltip>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
@@ -82,6 +81,7 @@ class EditDetails extends Component {
           <DialogContent>
             <form>
               <TextField
+                color="secondary"
                 name="bio"
                 type="text"
                 label="Bio"
@@ -93,25 +93,35 @@ class EditDetails extends Component {
                 onChange={this.handleChange}
                 fullWidth
               />
+              <InputLabel htmlFor='major-label'>Major</InputLabel>
               <Select
+                native
                 name='major'
-                labelId='major'
+                labelId='major-label'
                 id='major'
                 value={this.state.major}
                 onChange={this.handleChange}
-                input={<Input />}>
+                input={<Input />}
+                style={{ minWidth: 100 }}
+                inputProps={{
+                  name: 'major',
+                  id: 'major-label'
+                }}>
+                  <option key={"none"} value={""}>
+                    None
+                  </option>
                   {majors.map(major => (
-                    <MenuItem key={major} value={major}> { major } </MenuItem>
+                    <option key={major} value={major}> { major } </option>
                   ))}
               </Select>
             </form>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
-              Cancel
+            <Button onClick={this.handleClose} style={{ textTransform: 'none' }}>
+              <Typography color="error">Cancel</Typography>
             </Button>
-            <Button onClick={this.handleSubmit} color="primary">
-              Save
+            <Button onClick={this.handleSubmit} color="secondary" style={{ textTransform: 'none' }}>
+              <Typography color="secondary">Save</Typography>
             </Button>
           </DialogActions>
         </Dialog>

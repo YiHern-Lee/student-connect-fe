@@ -2,35 +2,51 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import { ForumDisplay, PostDisplay } from '../components';
-import { List, Typography, Card, Button } from '@material-ui/core';
+import { List, Typography, Card, Button, CardContent } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { connect } from 'react-redux';
-import { getAllPosts, getAllForums } from '../redux/actions/dataActions';
+import { getPosts, setHomePage, getForums } from '../redux/actions/dataActions';
 import { Link } from 'react-router-dom';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import HomeSkeleton from '../util/skeletons/HomeSkeleton';
 
 const styles = (theme) => ({
-    ...theme.styles,
-    drawer: {
-        width: 250,
-        outline: '10px',
-    },
-    drawerPaper: {
-        width: "inherit",
-        paddingTop: 100, // equal to AppBar height
-        background: 'transparent',
-        outline: '10px',
-        borderLeft: 0
-    },
+    ...theme.styles
 })
 
 class home extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            postReq: {
+                filter: "createdAt"
+            },
+            forumReq: {
+                filter: "createdAt",
+                limit: 5
+            }
+        }
+    }
     componentDidMount() {
-        this.props.getAllPosts();
-        this.props.getAllForums();
+        if (this.props.data.page !== 'home') {
+            this.props.setHomePage();
+            this.props.getPosts(this.state.postReq);
+            this.props.getForums(this.state.forumReq);
+        }
+    }
+    
+    fetchPostData() {
+        this.setState({
+            postReq: {
+                ...this.state.postReq,
+                startAt: this.props.data.posts[this.props.data.posts.length - 1].postId
+            }
+        })
+        this.props.getPosts(this.state.postReq)
     }
 
     render() {
-        const { classes, data: { posts, forums } } = this.props;
+        const { classes, data: { posts, forums, loading } } = this.props;
         let recentForumsMarkup = forums ? (
             forums.map(forum => <ForumDisplay key={forum.title} forum={ forum } />)
         ) : <p></p>
@@ -40,6 +56,8 @@ class home extends Component {
         ) : <p></p>
 
         return (
+            loading ? 
+            <HomeSkeleton /> :
             <div>
                 <Grid container spacing={10} justify='flex-end'>
                     <Grid item sm={8} xs={12}>
@@ -51,7 +69,13 @@ class home extends Component {
                             <br />
                         </Card>
                         <br />
-                        {recentPostsMarkup}
+                        <InfiniteScroll
+                            dataLength={recentPostsMarkup.length}
+                            next={() => this.fetchPostData()}
+                            hasMore={true}
+                            loader={<Card><CardContent></CardContent></Card>}>
+                            {recentPostsMarkup}
+                        </InfiniteScroll>
                     </Grid>
                     <Grid item sm={4} xs={12}>
                         <Card>
@@ -65,9 +89,6 @@ class home extends Component {
                         </Card>
                     </Grid>
                 </Grid>
-                
-                        
-
             </div>
         );
     }
@@ -75,8 +96,8 @@ class home extends Component {
 
 home.propTypes = {
     data: PropTypes.object.isRequired,
-    getAllPosts: PropTypes.func.isRequired,
-    getAllForums: PropTypes.func.isRequired
+    getPosts: PropTypes.func.isRequired,
+    getForums: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
@@ -85,8 +106,9 @@ const mapStateToProps = (state) => ({
 })
 
 const mapActionsToProps = {
-    getAllPosts,
-    getAllForums
+    getForums,
+    getPosts,
+    setHomePage
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(home));

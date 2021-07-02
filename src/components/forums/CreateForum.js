@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 // MUI
 import { IconButton, Button, TextField, Dialog, 
-    DialogContent, DialogTitle, CircularProgress, Tooltip } from '@material-ui/core';
+    DialogContent, DialogTitle, CircularProgress, Tooltip, Select, Input, MenuItem } from '@material-ui/core';
 import { Add as AddIcon, Close as CloseIcon } from '@material-ui/icons';
 import { connect } from 'react-redux';
 import { createForum, clearErrors } from '../../redux/actions/dataActions';
@@ -20,9 +20,8 @@ class CreateForum extends Component {
         this.state = {
             open: false,
             title: '',
-            body: '',
+            faculty: '',
             errors: {},
-            id: props.id
         };
     }
 
@@ -32,7 +31,7 @@ class CreateForum extends Component {
         }
         if (prevProps.UI.errors || prevProps.UI.loading) {
             if (!this.props.UI.errors && !this.props.UI.loading) {
-                this.setState({ title: '', body: '' });
+                this.setState({ title: '', faculty: '' });
                 this.handleClose();
             }
         }
@@ -54,16 +53,16 @@ class CreateForum extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
         this.props.createForum({ title: this.state.title, 
-            body: this.state.body,
-            forum: this.state.id })
+            faculty: this.state.faculty }, this.props.history)
     }
 
     render() {
         const { errors } = this.state;
-        const { classes, UI: { loading }, user: { credentials: { username }, authenticated }} = this.props;
+        const { classes, UI: { loading }, user: { /* credentials: { username }, */ authenticated }} = this.props;
+        const faculties = ['School of Computing', 'School of Business', 'Faculty of Science', 'Gonna add all the faculties']
         return (
             <Fragment>
-                <Tooltip title='Create a post' arrow>
+                <Tooltip title='Create a forum' arrow>
                     { authenticated ? 
                     (<IconButton onClick={ this.handleOpen }>
                         <AddIcon/>
@@ -80,36 +79,48 @@ class CreateForum extends Component {
                     <IconButton onClick={ this.handleClose } className={ classes.closeButton }>
                         <CloseIcon/>
                     </IconButton>
-                    <DialogTitle>Create a new post</DialogTitle>
+                    <DialogTitle>Create a new forum</DialogTitle>
                     <DialogContent>
                         <form onSubmit={ this.handleSubmit }>
                             <TextField
+                                color="secondary"
                                 name='title'
                                 type='text'
-                                label='Post title'
+                                label='Forum title'
                                 multiline
                                 rows='1'
-                                placeholder={ `What would you like to discuss?`}
+                                placeholder={ `What will the forum be about?` }
                                 error={ errors.title ? true : false }
                                 helperText={ errors.title ? errors.title : null }
                                 className={ classes.textField }
                                 onChange={ this.handleChange }
                                 fullWidth />
-                            <TextField
-                                name='body'
+                            {/* <TextField
+                                color="secondary"
+                                name='faculty'
                                 type='text'
-                                label='Post body'
+                                label='Faculty'
                                 multiline
-                                rows='2'
-                                rowsMax='8'
-                                placeholder={ `Share your thoughts, ${username}!`}
-                                error={ errors.body ? true : false }
-                                helperText={ errors.body ? errors.body : null }
+                                rows='1'
+                                placeholder={ `Which student body does it concern?` }
                                 className={ classes.textField }
                                 onChange={ this.handleChange }
-                                fullWidth />
-                            <Button type="submit" variant="contained" color="primary"
-                                className={ classes.submitButton } disabled={ loading }>
+                                fullWidth /> */}
+                            <Select
+                                name='faculty'
+                                labelId='faculty'
+                                id='faculty'
+                                value={this.state.faculty}
+                                onChange={this.handleChange}
+                                input={<Input />}>
+                                    <MenuItem value=''>--</MenuItem>
+                                {faculties.map(faculty => (
+                                    <MenuItem key={faculty} value={faculty}> { faculty } </MenuItem>
+                                ))}
+                            </Select>
+                            <Button type="submit" variant="outlined" color="secondary"
+                                className={ classes.submitButton } disabled={ loading } 
+                                style={{ marginBottom: '2%' }}>
                                 Submit
                                 { loading &&
                                     (<CircularProgress 

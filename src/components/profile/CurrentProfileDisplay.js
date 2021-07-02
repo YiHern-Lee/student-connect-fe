@@ -49,7 +49,7 @@ class CurrentProfileDisplay extends Component {
                             />
                             <Tooltip title='Edit profile picture' arrow>
                             <Button className={ classes.editImageButton } onClick={ this.handleEditPicture }>
-                                <EditIcon color="primary" />
+                                <EditIcon color="secondary" />
                             </Button>
                             </Tooltip>
                         </div>
@@ -57,23 +57,29 @@ class CurrentProfileDisplay extends Component {
                             <MuiLink
                                 component={Link}
                                 to={`/users/${userId}`}
-                                color="primary"
+                                color="secondary"
                                 variant="h5">
                                 @{username}
                             </MuiLink>
                             <br />
                             <br />
-                            {bio && <Typography variant="body1">{bio}</Typography>}
+                            {bio ? <Typography variant="body1">{bio}</Typography> : 
+                                <Typography variant="body1">No bio</Typography>}
                             <br />
-                            {major && (
+                            {major ? (
                                 <Fragment>
-                                    <ClassIcon color="primary" />&nbsp;&nbsp;
+                                    <ClassIcon color="secondary" />&nbsp;&nbsp;
                                     <span style={{ paddingBottom: '10px' }}>{major}</span>
                                     <br />
                                 </Fragment>
-                            )}
+                            ) : 
+                            <Fragment>
+                                    <ClassIcon color="secondary" />&nbsp;&nbsp;
+                                    <span style={{ paddingBottom: '10px' }}>No major indicated</span>
+                                    <br />
+                                </Fragment>}
                             <br />
-                            <CalendarToday color="primary" />&nbsp;&nbsp;
+                            <CalendarToday color="secondary" />&nbsp;&nbsp;
                             <span>Joined {dayjs(createdAt).format('MMM YYYY')}</span>
                             <div style={{ position: 'absolute', right: '10%', bottom: '-15%'}}>
                                 <EditDetails />

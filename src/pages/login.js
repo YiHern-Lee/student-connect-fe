@@ -66,7 +66,7 @@ class login extends Component {
                 <Grid item sm>
                     <img src={AppIcon} alt='social' className={classes.image} />
                     <Typography variant="h2" className={classes.pageTitle}>Login</Typography>
-                    <form noValidate onSubmit={this.handleSubmit}>
+                    <form noValidate onSubmit={this.handleSubmit} color="secondary">
                         <TextField
                             id="email"
                             name="email"
@@ -78,6 +78,7 @@ class login extends Component {
                             value={this.state.email}
                             onChange={this.handleChange}
                             fullWidth
+                            color="secondary"
                         />
                         <TextField
                             id="password"
@@ -90,6 +91,7 @@ class login extends Component {
                             value={this.state.password}
                             onChange={this.handleChange}
                             fullWidth
+                            color="secondary"
                         />
                         {errors.general && (
                             <Typography variant="body2" className={classes.customError}>

@@ -1,7 +1,7 @@
 import { SET_USER, SET_AUTHENTICATED, SET_UNAUTHENTICATED,
     UPVOTE_POSTS, DOWNVOTE_POSTS, REMOVE_UPVOTE_POSTS, REMOVE_DOWNVOTE_POSTS, 
     UPVOTE_COMMENTS, DOWNVOTE_COMMENTS, REMOVE_UPVOTE_COMMENTS, 
-    REMOVE_DOWNVOTE_COMMENTS, SET_FOLLOW, SET_UNFOLLOW } from '../types';
+    REMOVE_DOWNVOTE_COMMENTS, SET_FOLLOW, SET_UNFOLLOW, MARK_NOTIFICATIONS_READ } from '../types';
 
 const initialState = {
     authenticated: false,
@@ -10,10 +10,11 @@ const initialState = {
     downvotes: [],
     commentUpvotes: [],
     commentDownvotes: [],
-    forumFollows: []
+    forumFollows: [],
+    notifications: []
 }
 
-export default function(state = initialState, action) {
+export default function user(state = initialState, action) {
     let index;
     switch(action.type) {
         case SET_AUTHENTICATED:
@@ -79,14 +80,21 @@ export default function(state = initialState, action) {
         case SET_FOLLOW:
             state.forumFollows.push(action.payload.forumId);
             return {
-                ...state,
+                ...state
             };
         case SET_UNFOLLOW:
             index = state.forumFollows.findIndex(forum => forum === action.payload.forumId);
             if (index > -1) state.forumFollows.splice(index, 1);
             return {
-                ...state,
+                ...state
             };
+        case MARK_NOTIFICATIONS_READ:
+            state.notifications.forEach(notification => {
+                notification.read = true;
+            });
+            return {
+                ...state
+            }
         default: 
             return state;
     }

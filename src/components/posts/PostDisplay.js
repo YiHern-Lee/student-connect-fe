@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 import { upvotePost, downvotePost, unUpvotePost, unDownvotePost } from '../../redux/actions/dataActions';
 
 import { Link, withRouter } from 'react-router-dom';
-import DeletePost from '../buttons/DeletePost';
+import DeletePost from './DeletePost';
 
 const styles = (theme) => ({
     ...theme.styles,
@@ -86,7 +86,7 @@ class PostDisplay extends Component {
                                     { dayjs(createdAt).fromNow() }
                                 </Typography>
                             </div>
-                            <Typography className={ classes.postForum } variant="caption">Posted in /{ forum }</Typography>
+                            <Typography className={ classes.postForum } variant="caption"><Link to={`/forums/${forum}`}>Posted in /{ forum }</Link></Typography>
                         </div>
                         <Typography className={classes.postTitle} variant="h5">
                             { title }

@@ -4,9 +4,10 @@ import { SET_FORUM_POSTS, LOADING_DATA, SET_FORUMS,
     SET_POST, UPVOTE_COMMENTS, DOWNVOTE_COMMENTS, 
     REMOVE_UPVOTE_COMMENTS, REMOVE_DOWNVOTE_COMMENTS, DELETE_POST, 
     CREATE_POST, CREATE_COMMENT, DELETE_COMMENT, 
-    SET_OTHER_USER_DATA } from '../types';
+    SET_OTHER_USER_DATA, ADD_POSTS, SET_HOME_PAGE, SET_FORUM_PAGE, SET_USER_PAGE } from '../types';
 
 const initialState = {
+    page: '',
     info: {},
     posts: [],
     post: {},
@@ -15,9 +16,24 @@ const initialState = {
     loading: false
 }
 
-export default function(state = initialState, action) {
+export default function data(state = initialState, action) {
     let index;
     switch(action.type) {
+        case SET_HOME_PAGE:
+            return {
+                ...state,
+                page: 'home'
+            };
+        case SET_FORUM_PAGE: 
+            return {
+                ...state,
+                page: action.payload
+            };
+        case SET_USER_PAGE:
+            return {
+                ...state,
+                page: action.payload
+            }
         case SET_FORUM_POSTS:
             return {
                 ...state,
@@ -28,13 +44,19 @@ export default function(state = initialState, action) {
         case LOADING_DATA:
             return {
                 ...state,
-                loading: true
+                loading: true,
             };
         case SET_POSTS:
             return {
                 ...state,
                 loading: false,
                 posts: action.payload
+            };
+        case ADD_POSTS:
+            state.posts = state.posts.concat(action.payload);
+            return {
+                ...state,
+                loading: false,
             };
         case SET_FORUMS:
             return {

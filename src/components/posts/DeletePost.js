@@ -44,7 +44,7 @@ class DeletePost extends Component {
                             </Typography>
                         </DialogTitle>
                         <DialogActions>
-                            <Button onClick={ this.handleClose } color='primary'>
+                            <Button onClick={ this.handleClose } color='error'>
                                 Cancel
                             </Button>
                             <Button onClick={ this.deletePost } color='default'>

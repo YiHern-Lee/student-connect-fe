@@ -5,6 +5,7 @@ import { createComment } from '../../redux/actions/dataActions';
 
 // MUI
 import { withStyles, TextField, Avatar } from '@material-ui/core';
+import { Link, withRouter } from 'react-router-dom';
 
 const styles = (theme) => ({
     ...theme.styles
@@ -37,10 +38,11 @@ class CreateComment extends Component {
     
     render() {
         const { errors } = this.state;
-        const { classes, user: { credentials: { userImageUrl }}} = this.props;
+        const { classes, user: { credentials: { userImageUrl }, authenticated }} = this.props;
         return (
             <div style={{ display: 'flex', justifyContent: 'center', position: 'relative' }}>
                 <Avatar src={ userImageUrl } className={ classes.commentAvatar }></Avatar>
+                { authenticated ? 
                 <form onSubmit={ this.handleSubmit } className={ classes.commentForm }>
                 <TextField name='body'
                     type='text'
@@ -51,8 +53,22 @@ class CreateComment extends Component {
                     onChange={ this.handleChange }
                     helperText={ errors.body ? errors.body : null }
                     className={ classes.textField }
-                    placeholder='Comment on post' />
+                    placeholder='Write a comment...' 
+                    color="secondary"/>
+                </form> : 
+                <form className={ classes.commentForm }>
+                <TextField component={Link} 
+                    to={{ pathname: '/login', state: { from: this.props.location.pathname }}}
+                    name='body'
+                    type='text'
+                    label='Comment on post'
+                    fullWidth
+                    value={ this.state.body }
+                    className={ classes.textField }
+                    placeholder='Write a comment...' 
+                    color="secondary" />
                 </form>
+                }
             </div>
         )
     }
@@ -61,9 +77,8 @@ class CreateComment extends Component {
 CreateComment.propTypes = {
     createComment: PropTypes.func.isRequired,
     UI: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
-    postId: PropTypes.string.isRequired,
-    authenticated: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = (state) => ({
@@ -71,4 +86,4 @@ const mapStateToProps = (state) => ({
     user: state.user
 })
 
-export default connect(mapStateToProps, { createComment })(withStyles(styles)(CreateComment));
+export default connect(mapStateToProps, { createComment })(withStyles(styles)(withRouter(CreateComment)));

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { CommentDisplay, PostComponent } from '../components';
-import { Card, Grid, CardContent, Typography, List } from '@material-ui/core';
+import { PostComponent, CommentComponent } from '../components';
+import { Grid } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
-import CommentComponent from '../components/displays/CommentComponent';
 
 import { connect } from 'react-redux';
 import { getPost } from '../redux/actions/dataActions';
@@ -20,7 +19,7 @@ class post extends Component {
     }
 
     render() {
-        const { classes, data: { post, comments } } = this.props;
+        const { data: { post, comments } } = this.props;
         let postDisplay = <PostComponent key={post.postId} post={ post } comments={ comments } />;
         return (
             <div>

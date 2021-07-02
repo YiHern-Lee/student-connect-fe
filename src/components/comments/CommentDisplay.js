@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 import { upvoteComment, downvoteComment, unUpvoteComment, unDownvoteComment } from '../../redux/actions/dataActions';
 
 import { Link, withRouter } from 'react-router-dom';
-import DeleteComment from '../buttons/DeleteComment';
+import DeleteComment from './DeleteComment';
 
 const styles = (theme) => ({
     ...theme.styles,

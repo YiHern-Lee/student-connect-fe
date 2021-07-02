@@ -8,17 +8,22 @@ const themeData = {
         },
         primary: {
             light: '#33c9dc',
-            main: darkMode ? '#444444' : '#00bcd4',
+            main: darkMode ? '#444444' : '#e9ebed',
             dark: '#008394',
             contrastText: '#fff'
         },
         secondary: {
             light: '#ff6333',
-            main: '#ffffff',
+            main: darkMode ? '#ffffff' : '#2A374B',
             dark: '#b22a00',
             contrastText: '#fff'
         },
-        type: darkMode ? 'dark' : 'light' 
+        tertiary: {
+            light: '#d40015',
+            main: '#d40015',
+            dark: '#d40015',
+            contrastText: '#d40015'
+        }
     }, 
     styles: {
         postTitle: {
@@ -146,14 +151,14 @@ const themeData = {
             top: '3%'
         },
         commentForm: {
-            width: '80%',
+            width: '85%',
             position: 'relative',
             margin: '10px auto 10px auto'
         },
         commentAvatar: {
-            position: 'absolute',
-            left: '3.5%',
-            top: '35%'
+            position: 'relative',
+            marginTop: '4%',
+            left: '3.5%'
         },
         profileImage: {
             width: 200,

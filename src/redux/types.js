@@ -3,6 +3,7 @@ export const SET_UNAUTHENTICATED = 'SET_UNAUTHENTICATED';
 export const SET_AUTHENTICATED = 'SET_AUTHENTICATED';
 export const SET_USER = 'SET_USER';
 export const LOADING_USER = 'LOADING_USER';
+export const MARK_NOTIFICATIONS_READ = 'MARK_NOTIFICATIONS_READ';
 
 // UI reducer types
 export const SET_ERRORS = 'SET_ERRORS';
@@ -11,10 +12,20 @@ export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 export const STOP_LOADING_UI = 'STOP_LOADING_UI';
 
 // Data reducer types
+export const SET_HOME_PAGE = 'SET_HOME_PAGE';
+export const SET_FORUM_PAGE = 'SET_FORUM_PAGE';
+export const SET_USER_PAGE = 'SET_USER_PAGE';
+
 export const SET_POSTS = 'SET_POSTS';
+export const ADDING_POSTS = 'ADDING_POSTS';
+export const ADD_POSTS = 'ADD_POSTS';
+export const STOP_ADDING_POSTS = 'STOP_ADDING_POSTS';
 export const SET_FORUM_POSTS = 'SET_FORUM_POSTS';
 export const LOADING_DATA = 'LOADING_DATA';
 export const SET_FORUMS = 'SET_FORUMS';
+export const ADDING_FORUMS = 'ADDING_FORUMS';
+export const ADD_FORUMS = 'ADD_FORUMS';
+export const STOP_ADDING_FORUMS = 'STOP_ADDING_FORUMS';
 export const SET_POST = 'SET_POST';
 export const DELETE_POST = 'DELETE_POST';
 export const CREATE_POST = 'CREATE_POST';

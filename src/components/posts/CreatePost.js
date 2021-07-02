@@ -94,7 +94,8 @@ class CreatePost extends Component {
                                 helperText={ errors.title ? errors.title : null }
                                 className={ classes.textField }
                                 onChange={ this.handleChange }
-                                fullWidth />
+                                fullWidth 
+                                color="secondary"/>
                             <TextField
                                 name='body'
                                 type='text'
@@ -107,9 +108,11 @@ class CreatePost extends Component {
                                 helperText={ errors.body ? errors.body : null }
                                 className={ classes.textField }
                                 onChange={ this.handleChange }
-                                fullWidth />
-                            <Button type="submit" variant="contained" color="primary"
-                                className={ classes.submitButton } disabled={ loading }>
+                                fullWidth 
+                                color="secondary"/>
+                            <Button type="submit" variant="outlined" color="secondary"
+                                className={ classes.submitButton } disabled={ loading }
+                                style={{ marginBottom: '2%' }}>
                                 Submit
                                 { loading &&
                                     (<CircularProgress 

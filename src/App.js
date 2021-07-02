@@ -1,6 +1,6 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { home, login, signup, forumExplore, forum, post, profile, user } from "./pages/index";
+import { home, login, signup, forumExplore, forum, post, user } from "./pages/index";
 import { Navbar } from "./components/index";
 import themeData from './util/theme';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
@@ -15,8 +15,8 @@ import { logoutUser, getCurrentUserData } from './redux/actions/userActions';
 import jwtDecode from 'jwt-decode';
 import axios from 'axios';
 
-/* axios.defaults.baseURL = "http://localhost:5001/student-connect-3d3e3/asia-southeast2/api"; */
-axios.defaults.baseURL = "https://asia-southeast2-student-connect-3d3e3.cloudfunctions.net/api";
+axios.defaults.baseURL = "http://localhost:5001/student-connect-3d3e3/asia-southeast2/api";
+/* axios.defaults.baseURL = "https://asia-southeast2-student-connect-3d3e3.cloudfunctions.net/api"; */
 
 const theme = createMuiTheme(themeData);
 
@@ -27,7 +27,6 @@ const logout = () => {
 const token = localStorage.FBIdToken;
 if (token) {
   const decodedToken = jwtDecode(token);
-  console.log(decodedToken.exp)
   if (decodedToken.exp * 1000 < Date.now()) {
     logout();
     window.location.href = '/login';
@@ -46,7 +45,7 @@ function App() {
         <div className="App">
           <Router>
             <div className="container">
-              <Navbar logout={ () => logout() }/>
+              <Navbar />
                 <Switch>
                     <Route exact path="/forums" component={ forumExplore }></Route>
                     <Route exact path="/forums/:forumId" component={ forum }></Route>
@@ -54,7 +53,6 @@ function App() {
                     <Route exact path="/login" component={ login }></Route>
                     <Route exact path="/signup" component={ signup }></Route>
                     <Route exact path="/posts/:postId" component={ post }></Route>
-                    <Route exact path="/profile" component={ profile }></Route>
                     <Route exact path="/users/:userId" component={ user }></Route>
                 </Switch>
             </div>

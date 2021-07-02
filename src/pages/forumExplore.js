@@ -3,16 +3,26 @@ import { GridList, GridListTile, Card, CardContent, Typography } from '@material
 import { ForumCard } from '../components';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { connect } from 'react-redux';
-import { getAllForums } from '../redux/actions/dataActions';
+import { getForums } from '../redux/actions/dataActions';
+import CreateForum from '../components/forums/CreateForum';
 
 const styles = (theme) => ({
     ...theme.styles
 })
 
 class forumExplore extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            forumReq: {
+                filter: "createdAt",
+                limit: 9
+            }
+        }
+    }
 
     componentDidMount() {
-        this.props.getAllForums();
+        this.props.getForums(this.state.forumReq);
     }
     render() {
         const { classes, data: { forums }} = this.props;
@@ -29,7 +39,7 @@ class forumExplore extends Component {
                             <Typography variant="h5">Forums</Typography>
                         </div>
                         <div style={{ marginLeft: 'auto' }}>
-                            <typography>Hi</typography>
+                            <CreateForum history={ this.props.history }/>
                         </div>
                     </CardContent>
                 </Card>
@@ -46,7 +56,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapActionsToProps = {
-    getAllForums
+    getForums
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(forumExplore));

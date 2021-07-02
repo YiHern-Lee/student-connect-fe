@@ -4,9 +4,9 @@ import { Card, Grid, CardContent, Typography } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 import { connect } from 'react-redux';
-import { getForumPosts, followForum, unfollowForum } from '../redux/actions/dataActions';
+import { getForumPosts, followForum, unfollowForum, setForumPage } from '../redux/actions/dataActions';
 import PropTypes from 'prop-types';
-import CreatePost from '../components/displays/CreatePost';
+import CreatePost from '../components/posts/CreatePost';
 import { Follow } from '../components/buttons/Follow';
 import { Link } from 'react-router-dom';
 
@@ -18,7 +18,10 @@ class forum extends Component {
 
     componentDidMount() {
         const forumId = this.props.match.params.forumId;
-        this.props.getForumPosts(forumId);
+        if (this.props.data.page !== forumId) {
+            this.props.setForumPage(forumId)
+            this.props.getForumPosts(forumId);
+        }
     }
 
     follow = (forumId) => {
@@ -35,7 +38,7 @@ class forum extends Component {
     }
 
     render() {
-        const { classes, data: { info, posts, loading }, user: { authenticated } } = this.props;
+        const { data: { info, posts, loading }, user: { authenticated } } = this.props;
         let forumPostsMarkup = posts ? (
             posts.map(post => <PostDisplay key={post.postId} post={ post } />)
             ) : <p></p>;
@@ -102,7 +105,8 @@ const mapStateToProps = state => ({
 const mapActionsToProps = {
     getForumPosts,
     followForum,
-    unfollowForum
+    unfollowForum,
+    setForumPage
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(forum));

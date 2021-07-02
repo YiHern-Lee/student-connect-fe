@@ -6,10 +6,11 @@ export const Follow = (props) => {
     return (
         <div>
             <Tooltip title={ props.followed ? 'Unfollow' : 'Follow' } arrow>
-                <Button onClick={ props.onClick } variant={props.followed ? 'contained' : 'outlined' }>
+                <Button onClick={ props.onClick } variant={props.followed ? 'contained' : 'outlined' }
+                style={{ textTransform: 'none' }}>
                     { props.followed ? 
-                        <Typography>Followed</Typography> :
-                        <Typography>Follow</Typography>
+                        <Typography color="textSecondary" variant="body1">Followed</Typography> :
+                        <Typography color="textSecondary" variant="body1">Follow</Typography>
                     }
                 </Button>
             </Tooltip>
@@ -18,6 +19,5 @@ export const Follow = (props) => {
 }
 
 Follow.propTypes = {
-    up: PropTypes.bool.isRequired,
     onClick: PropTypes.func.isRequired
 }

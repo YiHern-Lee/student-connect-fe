@@ -85,6 +85,7 @@ class signup extends Component {
                             value={this.state.email}
                             onChange={this.handleChange}
                             fullWidth
+                            color="secondary"
                         />
                         <TextField
                             id="password"
@@ -97,6 +98,7 @@ class signup extends Component {
                             value={this.state.password}
                             onChange={this.handleChange}
                             fullWidth
+                            color="secondary"
                         />
                         <TextField
                             id="confirmPassword"
@@ -109,6 +111,7 @@ class signup extends Component {
                             value={this.state.confirmPassword}
                             onChange={this.handleChange}
                             fullWidth
+                            color="secondary"
                         />
                         <TextField
                             id="username"
@@ -121,6 +124,7 @@ class signup extends Component {
                             value={this.state.username}
                             onChange={this.handleChange}
                             fullWidth
+                            color="secondary"
                         />
                         {errors.general && (
                             <Typography variant="body2" className={classes.customError}>

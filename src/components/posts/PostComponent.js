@@ -3,10 +3,10 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types';
 
 //MUI
-import DeletePostInPost from '../buttons/DeletePostInPost';
+import DeletePostInPost from './DeletePostInPost';
 import { Vote } from '../buttons/Vote';
 import More from '../buttons/More';
-import { Card, CardContent, Typography, Avatar, Divider, Button, Tooltip, List, TextField } from '@material-ui/core';
+import { Card, CardContent, Typography, Avatar, Divider, Button } from '@material-ui/core';
 import { ModeCommentOutlined as CommentOutlined } from '@material-ui/icons';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import dayjs from 'dayjs';
@@ -88,7 +88,7 @@ class PostComponent extends Component {
                                     { dayjs(createdAt).fromNow() }
                                 </Typography>
                             </div>
-                            <Typography className={ classes.postForum } variant="caption">Posted in /{ forum }</Typography>
+                            <Typography className={ classes.postForum } variant="caption"><Link to={`/forums/${forum}`}>Posted in /{ forum }</Link></Typography>
                         </div>
                         <Typography className={classes.postTitle} variant="h5">
                             { title }
