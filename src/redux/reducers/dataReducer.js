@@ -117,6 +117,11 @@ export default function data(state = initialState, action) {
                 ...state.post,
                 commentCount: state.post.commentCount + 1
             };
+            index = state.posts.findIndex(post => post.postId === action.payload.postId);
+            state.posts[index] = {
+                ...state.posts[index],
+                commentCount: state.posts[index].commentCount + 1
+            }
             return {
                 ...state,
                 comments: [
@@ -127,6 +132,7 @@ export default function data(state = initialState, action) {
         case SET_OTHER_USER_DATA:
             return {
                 ...state,
+                loading: false,
                 info: action.payload.userDetails,
                 posts: action.payload.posts
             }

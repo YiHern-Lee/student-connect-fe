@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import CreatePost from '../components/posts/CreatePost';
 import { Follow } from '../components/buttons/Follow';
 import { Link } from 'react-router-dom';
+import ForumSkeleton from '../util/skeletons/ForumSkeleton';
 
 const styles = (theme) => ({
     ...theme.styles
@@ -50,40 +51,41 @@ class forum extends Component {
             <Follow onClick={() => {}} followed={ false }/>
         </Link>
         return (
-            
+            loading ? <div>
+                <ForumSkeleton />
+            </div>
+            :
             <div>
                 <Grid container spacing={10} justify='flex-end'>
                     <Grid item sm />
                     <Grid item sm={8} xs={12}>
-
-                        { loading ? <p>Loading</p> : (
-                            <div>
-                                <Card>
-                                <CardContent style={{ display: 'flex' }}>
-                                    <div>
-                                        <Typography variant='h5'>
-                                            { info.title }
-                                        </Typography>
-                                        <Typography variant='body2'>
-                                            { info.faculty }
-                                        </Typography>
-                                    </div>
-                                    <div style={{ marginLeft: 'auto' }}>
-                                        { followButton }
-                                    </div>
-                                </CardContent>
-                            </Card>
-                            <br />
+                        <div>
                             <Card>
-                                <CardContent style={{ display: 'flex', padding: '0px 10px 0px 0px' }}>
-                                    <div style={{ marginLeft: 'auto' }}>
-                                        <CreatePost id={ info.title }/>
-                                    </div>
-                                </CardContent>
-                            </Card>
-                            <br />
-                            {forumPostsMarkup} 
-                            </div>)}
+                            <CardContent style={{ display: 'flex' }}>
+                                <div>
+                                    <Typography variant='h5'>
+                                        { info.title }
+                                    </Typography>
+                                    <Typography variant='body2'>
+                                        { info.faculty }
+                                    </Typography>
+                                </div>
+                                <div style={{ marginLeft: 'auto' }}>
+                                    { followButton }
+                                </div>
+                            </CardContent>
+                        </Card>
+                        <br />
+                        <Card>
+                            <CardContent style={{ display: 'flex', padding: '0px 10px 0px 0px' }}>
+                                <div style={{ marginLeft: 'auto' }}>
+                                    <CreatePost id={ info.title }/>
+                                </div>
+                            </CardContent>
+                        </Card>
+                        <br />
+                        {forumPostsMarkup} 
+                        </div>
                     </Grid>
                     <Grid item sm />
                 </Grid>

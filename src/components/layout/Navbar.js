@@ -33,7 +33,8 @@ const Navbar = (props) => {
     }
 
     const location = useLocation();
-    const currentLocation = location.pathname === '/login' || '/signup' ? '/' : location.pathname;
+    const currentLocation = location.pathname === '/login' || location.pathname === '/signup' 
+        ? '/' : location.pathname;
     return (
         <div>
             <AppBar position="fixed">

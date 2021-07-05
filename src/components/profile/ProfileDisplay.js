@@ -19,7 +19,7 @@ class ProfileDisplay extends Component {
             user: { username, createdAt, userImageUrl, bio, major, userId }
         } = this.props;
 
-        let profileMarkup = (
+        return (
                 <Paper className={classes.paper}>
                     <div className={classes.profile}>
                         <div className={ classes.profileImageWrapper }>
@@ -56,10 +56,7 @@ class ProfileDisplay extends Component {
                         </div>
                     </div>
                 </Paper>
-            ) 
-
-        return profileMarkup;
-
+            );
     }
 }
 
