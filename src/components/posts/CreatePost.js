@@ -66,11 +66,11 @@ class CreatePost extends Component {
                 <Tooltip title='Create a post' arrow>
                     { authenticated ? 
                     (<IconButton onClick={ this.handleOpen }>
-                        <AddIcon/>
+                        <AddIcon color='secondary' />
                     </IconButton>) : 
                     (<IconButton component={ Link } 
                         to={{ pathname: '/login', state: { from: this.props.location.pathname }}}>
-                        <AddIcon/>
+                        <AddIcon color='secondary'/>
                     </IconButton>)}              
                     
                 </Tooltip>

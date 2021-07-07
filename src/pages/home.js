@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import { ForumDisplay, PostDisplay } from '../components';
-import { List, Typography, Card, Button, CardContent } from '@material-ui/core';
+import { List, Typography, Card, Button, CardContent, ListItem } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { connect } from 'react-redux';
-import { getPosts, setHomePage, getForums } from '../redux/actions/dataActions';
+import { getPosts, getForums } from '../redux/actions/dataActions';
+import { setHomePage } from '../redux/actions/uiActions';
 import { Link } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import HomeSkeleton from '../util/skeletons/HomeSkeleton';
@@ -39,7 +40,7 @@ class home extends Component {
         this.setState({
             postReq: {
                 ...this.state.postReq,
-                startAt: this.props.data.posts[this.props.data.posts.length - 1].postId
+                startAfter: this.props.data.posts[this.props.data.posts.length - 1].postId
             }
         })
         this.props.getPosts(this.state.postReq)
@@ -79,13 +80,22 @@ class home extends Component {
                     </Grid>
                     <Grid item sm={4} xs={12}>
                         <Card>
-                            <br/>
-                            <Button className={ classes.forumDisplayList } component={Link} to={'/forums'}>
-                                <Typography p={2} variant='h6' className={ classes.forumHeader } color="textPrimary">
-                                    Forums
-                                </Typography>
-                            </ Button>
-                            <List className={ classes.list }>{recentForumsMarkup}</List>
+                            <br />
+                            <List className={ classes.list } style={{ padding:'0px 0px 0px 0px' }}>
+                                <ListItem className={ classes.forumDisplayList }>
+                                    <Typography p={2} variant='h6' className={ classes.forumHeader } color="textPrimary">
+                                        Forums
+                                    </Typography>
+                                </ListItem>
+                                {recentForumsMarkup}
+                                <Button className={ classes.forumDisplayList } 
+                                    component={ Link } 
+                                    to={`/forums`}>
+                                    <ListItem className={ classes.listItem }>
+                                        <Typography variant='body1' color='textSecondary'>View more forums</Typography>    
+                                    </ListItem>
+                                </Button>
+                            </List>
                         </Card>
                     </Grid>
                 </Grid>

@@ -1,17 +1,32 @@
 import withStyles from '@material-ui/core/styles/withStyles';
 import React from 'react'
 import { Fade, Menu, MenuItem,
-    MenuList, Typography } from '@material-ui/core';
+    MenuList, Typography, Switch, ListItemIcon } from '@material-ui/core';
 
 import { Link, useLocation } from 'react-router-dom';
+import { setDarkMode, setLightMode } from '../../redux/actions/uiActions';
+import { connect } from 'react-redux';
 
 const styles = (theme) => ({
     ...theme.styles
 })
 
+const StyledMenuItem = withStyles({
+    root: {
+        '&:hover': {
+            backgroundColor: 'transparent'
+        }
+    }
+})(MenuItem);
+
 const Settings = (props) => {
     const location = useLocation();
     const currentLocation = location.pathname === '/login' || '/signup' ? '/' : location.pathname;
+
+    const toggleDarkMode = () => {
+        if (props.theme === 'light') props.setDarkMode();
+        else props.setLightMode();
+    }
     return (
         <div>
             <Menu id={props.id}
@@ -25,9 +40,15 @@ const Settings = (props) => {
                 TransitionComponent={Fade}>
                 
                 <MenuList>
-                    <MenuItem component={ Link } to='/'>
-                        <Typography>Settings</Typography>
-                    </MenuItem>
+                    <StyledMenuItem>
+                    <Typography>Darkmode</Typography>
+                    <ListItemIcon>
+                    <Switch 
+                        checked={ props.darkMode }
+                        onChange={ toggleDarkMode }
+                        name='toggleDarkMode'/>
+                    </ListItemIcon>
+                    </ StyledMenuItem>
                     { props.authenticated ? 
                     <MenuItem onClick={ props.logout }>
                         <Typography>Logout</Typography>
@@ -47,4 +68,8 @@ const Settings = (props) => {
     )
 }
 
-export default withStyles(styles)(Settings)
+const mapStateToProps = (state) => ({
+    theme: state.UI.theme
+})
+
+export default connect(mapStateToProps, { setDarkMode, setLightMode })(withStyles(styles)(Settings));

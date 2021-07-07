@@ -7,7 +7,7 @@ export const Follow = (props) => {
         <div>
             <Tooltip title={ props.followed ? 'Unfollow' : 'Follow' } arrow>
                 <Button onClick={ props.onClick } variant={props.followed ? 'contained' : 'outlined' }
-                style={{ textTransform: 'none' }}>
+                style={{ textTransform: 'none' }} color='primary'>
                     { props.followed ? 
                         <Typography color="textSecondary" variant="body1">Followed</Typography> :
                         <Typography color="textSecondary" variant="body1">Follow</Typography>

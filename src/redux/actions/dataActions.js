@@ -6,29 +6,46 @@ import { LOADING_UI, SET_FORUM_POSTS, STOP_LOADING_UI,
       REMOVE_UPVOTE_COMMENTS, REMOVE_DOWNVOTE_COMMENTS, DELETE_POST, 
       CREATE_POST, SET_ERRORS, CLEAR_ERRORS, 
       CREATE_COMMENT, DELETE_COMMENT, SET_OTHER_USER_DATA, 
-      SET_FOLLOW, SET_UNFOLLOW, ADD_POSTS, SET_HOME_PAGE, SET_FORUM_PAGE, SET_USER_PAGE, ADD_FORUMS } from '../types';
+      SET_FOLLOW, SET_UNFOLLOW, ADD_POSTS, 
+      ADD_FORUMS } from '../types';
 
-export const getForumPosts = (forumId) => (dispatch) => {
-    dispatch({ type: LOADING_DATA });
-    axios.get(`/forums/${forumId}`)
-        .then(res => {
-            dispatch({
-                type: SET_FORUM_POSTS,
-                payload: res.data
+export const getForumPosts = (forumId, reqBody) => (dispatch) => {
+    if (reqBody.startAfter) 
+        axios.post(`/forums/posts/${forumId}`, reqBody)
+            .then(res => {
+                dispatch({
+                    type: ADD_POSTS,
+                    payload: res.data
+                });
+            }).catch(err => {
+                dispatch({
+                    type: ADD_POSTS,
+                    payload: []
+                })
             });
-        }).catch(err => {
-            dispatch({
-                type: SET_FORUM_POSTS,
-                payload: {
-                    forumInfo: [],
-                    posts: []
-                }
-            })
-        })
+    else {
+        dispatch({ type: LOADING_DATA });
+        axios.post(`/forums/posts/${forumId}`, reqBody)
+            .then(res => {
+                dispatch({
+                    type: SET_FORUM_POSTS,
+                    payload: res.data
+                });
+            }).catch(err => {
+                dispatch({
+                    type: SET_FORUM_POSTS,
+                    payload: {
+                        forumInfo: {},
+                        posts: []
+                    }
+                })
+            });
+        }
 }
 
+
 export const getPosts = (reqBody) => (dispatch) => {
-    if (reqBody.startAt) {
+    if (reqBody.startAfter) {
         axios.post('/posts', reqBody)
             .then(res => {
                 dispatch({
@@ -59,7 +76,7 @@ export const getPosts = (reqBody) => (dispatch) => {
 }
 
 export const getForums = (reqBody) => (dispatch) => {
-    if (reqBody.startAt) {
+    if (reqBody.startAfter) {
         axios.post('/forums', reqBody)
             .then(res => {
                 dispatch({
@@ -87,22 +104,6 @@ export const getForums = (reqBody) => (dispatch) => {
                 });
             });
     }
-}
-
-export const getAllForums = () => (dispatch) => {
-    dispatch({ type: LOADING_DATA });
-    axios.get('/forums')
-        .then(res => {
-            dispatch({
-                type: SET_FORUMS,
-                payload: res.data
-            });
-        }).catch(err => { 
-            dispatch({
-                type: SET_FORUMS,
-                payload: []
-        })
-    });
 }
 
 // Upvote post
@@ -277,6 +278,40 @@ export const getUserData = (userId) => (dispatch) => {
         }).catch(err => console.log(err))
 }
 
+export const getUserPosts = (userId, reqBody) => (dispatch) => {
+    if (reqBody.startAfter) 
+        axios.post(`/users/posts/${userId}`, reqBody)
+            .then(res => {
+                dispatch({
+                    type: ADD_POSTS,
+                    payload: res.data
+                });
+            }).catch(err => {
+                dispatch({
+                    type: ADD_POSTS,
+                    payload: []
+                })
+            });
+    else {
+        dispatch({ type: LOADING_DATA });
+        axios.post(`/users/posts/${userId}`, reqBody)
+            .then(res => {
+                dispatch({
+                    type: SET_OTHER_USER_DATA,
+                    payload: res.data
+                });
+            }).catch(err => {
+                dispatch({
+                    type: SET_OTHER_USER_DATA,
+                    payload: {
+                        forumInfo: {},
+                        posts: []
+                    }
+                })
+            });
+    }
+}
+
 export const followForum = (forumId) => (dispatch) => {
     dispatch({ type: LOADING_UI });
     axios.post('forums/follow', { forumId })
@@ -301,21 +336,4 @@ export const unfollowForum = (forumId) => (dispatch) => {
 
 export const clearErrors = () => (dispatch) => {
     dispatch({ type: CLEAR_ERRORS });
-}
-
-export const setHomePage = () => (dispatch) => {
-    dispatch({ type: SET_HOME_PAGE });
-}
-
-export const setForumPage = (forumTitle) => (dispatch) => {
-    dispatch({ 
-        type: SET_FORUM_PAGE,
-        payload: `forum=${forumTitle}` 
-    });
-}
-
-export const setUserPage = (userId) => (dispatch) => {
-    dispatch({ 
-        type: SET_USER_PAGE,
-        payload: `user=${userId}` });
 }

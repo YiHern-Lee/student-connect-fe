@@ -3,7 +3,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types';
 
 //MUI
-import { Dialog, DialogTitle, Typography, DialogActions, Button } from '@material-ui/core';
+import { Dialog, DialogTitle, Typography, DialogActions, Button, MenuItem } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { deletePost } from '../../redux/actions/dataActions';
 
@@ -30,10 +30,10 @@ class DeletePost extends Component {
 
         return (
             <Fragment>
-                <Button onClick={ this.handleOpen }
+                <MenuItem onClick={ this.handleOpen }
                     className={ classes.deleteButton} >
                     Delete
-                </Button>
+                </MenuItem>
                 <Dialog open={ this.state.open } 
                     onClose={ this.handleClose }
                     fullWidth
@@ -44,11 +44,11 @@ class DeletePost extends Component {
                             </Typography>
                         </DialogTitle>
                         <DialogActions>
-                            <Button onClick={ this.handleClose } color='error'>
-                                Cancel
+                            <Button onClick={ this.handleClose } style={{ textTransform: 'none' }}>
+                                <Typography color='error'>Cancel</Typography>
                             </Button>
-                            <Button onClick={ this.deletePost } color='default'>
-                                Delete
+                            <Button onClick={ this.deletePost } style={{ textTransform: 'none' }}>
+                                <Typography color='secondary'>Delete</Typography>
                             </Button>
                         </DialogActions>
                 </Dialog>

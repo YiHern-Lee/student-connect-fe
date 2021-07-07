@@ -7,7 +7,7 @@ export const Vote = (props) => {
     return (
         <div>
             <Tooltip title={ props.up ? 'Upvote' : 'Downvote' } arrow>
-                <IconButton onClick={props.onClick}>
+                <IconButton onClick={props.onClick} color='secondary'>
                     {props.upvoted ? 
                         <ForwardIcon style={ props.up ? { transform: 'rotate(-90deg)'} : {transform: 'rotate(90deg)'}}/> :
                         <ForwardOutlined style={ props.up ? { transform: 'rotate(-90deg)'} : {transform: 'rotate(90deg)'}}/>

@@ -10,11 +10,14 @@ export const SET_ERRORS = 'SET_ERRORS';
 export const LOADING_UI = 'LOADING_UI';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 export const STOP_LOADING_UI = 'STOP_LOADING_UI';
+export const SET_LIGHT_MODE = 'SET_LIGHT_MODE';
+export const SET_DARK_MODE = 'SET_DARK_MODE';
 
 // Data reducer types
 export const SET_HOME_PAGE = 'SET_HOME_PAGE';
 export const SET_FORUM_PAGE = 'SET_FORUM_PAGE';
 export const SET_USER_PAGE = 'SET_USER_PAGE';
+export const SET_FORUM_EXPLORE_PAGE = 'SET_FORUM_EXPLORE_PAGE';
 
 export const SET_POSTS = 'SET_POSTS';
 export const ADDING_POSTS = 'ADDING_POSTS';
@@ -45,4 +48,4 @@ export const REMOVE_DOWNVOTE_COMMENTS = 'REMOVE_DOWNVOTE_COMMENTS';
 export const SET_OTHER_USER_DATA = 'SET_OTHER_USER_DATA';
 
 export const SET_FOLLOW = 'SET_FOLLOW_FORUM';
-export const SET_UNFOLLOW = 'SET_UNFOLLOW_FORUM'
+export const SET_UNFOLLOW = 'SET_UNFOLLOW_FORUM';

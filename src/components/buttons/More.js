@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 
 //MUI
-import { Button, IconButton, MenuItem, Menu, Tooltip } from '@material-ui/core';
+import { IconButton, MenuItem, Menu, Tooltip } from '@material-ui/core';
 import { MoreVertOutlined } from '@material-ui/icons';
 
 const More = (props) => {
@@ -17,7 +17,7 @@ const More = (props) => {
     return (
         <div>
             <Tooltip title='More' arrow>
-                <IconButton onClick={ handleClick } ref={ buttonRef }>
+                <IconButton onClick={ handleClick } ref={ buttonRef } color='secondary'>
                     <MoreVertOutlined />
                 </IconButton>
             </Tooltip>
@@ -27,14 +27,11 @@ const More = (props) => {
                 keepMounted
                 onClose={ handleClose }>
                 <MenuItem>
-                    <Button>
-                        Report
-                    </Button>
+                    Report
                 </MenuItem>
                 { props.authenticated && props.username === props.credentials.username ? 
-                    (<MenuItem>
-                        { deleteComponent }
-                    </MenuItem>) : null}
+                    deleteComponent
+                     : null}
             </Menu>
         </div>
     )

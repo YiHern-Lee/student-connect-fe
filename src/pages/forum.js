@@ -4,25 +4,45 @@ import { Card, Grid, CardContent, Typography } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 import { connect } from 'react-redux';
-import { getForumPosts, followForum, unfollowForum, setForumPage } from '../redux/actions/dataActions';
+import { getForumPosts, followForum, unfollowForum } from '../redux/actions/dataActions';
+import { setForumPage } from '../redux/actions/uiActions';
 import PropTypes from 'prop-types';
 import CreatePost from '../components/posts/CreatePost';
 import { Follow } from '../components/buttons/Follow';
 import { Link } from 'react-router-dom';
 import ForumSkeleton from '../util/skeletons/ForumSkeleton';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const styles = (theme) => ({
     ...theme.styles
 })
 
 class forum extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            postReq: {
+                filter: "createdAt"
+            }
+        }
+    }
 
     componentDidMount() {
         const forumId = this.props.match.params.forumId;
         if (this.props.data.page !== forumId) {
             this.props.setForumPage(forumId)
-            this.props.getForumPosts(forumId);
+            this.props.getForumPosts(forumId, this.state.postReq);
         }
+    }
+
+    fetchPostData = () => {
+        this.setState({
+            postReq: {
+                ...this.state.postReq,
+                startAfter: this.props.data.posts[this.props.data.posts.length - 1].postId
+            }
+        })
+        this.props.getForumPosts(this.props.match.params.forumId, this.state.postReq)
     }
 
     follow = (forumId) => {
@@ -40,9 +60,11 @@ class forum extends Component {
 
     render() {
         const { data: { info, posts, loading }, user: { authenticated } } = this.props;
-        let forumPostsMarkup = posts ? (
+        let forumPostsMarkup = posts.length > 0 ? (
             posts.map(post => <PostDisplay key={post.postId} post={ post } />)
-            ) : <p></p>;
+            ) : [<Card key='0'><CardContent style={{ textAlign: 'center' }}>
+                    <Typography variant='body1'>Currently, there are no posts in this forum</Typography>
+                </CardContent></Card>];
         const followButton = authenticated ? 
         <Follow onClick={ this.followedForum() ? () => this.unfollow(info.title) : () => this.follow(info.title) }
             followed={ this.followedForum() }/>
@@ -84,7 +106,12 @@ class forum extends Component {
                             </CardContent>
                         </Card>
                         <br />
-                        {forumPostsMarkup} 
+                        <InfiniteScroll
+                            dataLength={forumPostsMarkup.length}
+                            next={() => this.fetchPostData()}
+                            hasMore={true}>
+                            {forumPostsMarkup} 
+                        </InfiniteScroll>
                         </div>
                     </Grid>
                     <Grid item sm />
