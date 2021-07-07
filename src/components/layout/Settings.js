@@ -44,7 +44,7 @@ const Settings = (props) => {
                     <Typography>Darkmode</Typography>
                     <ListItemIcon>
                     <Switch 
-                        checked={ props.darkMode }
+                        checked={ props.theme === 'dark' }
                         onChange={ toggleDarkMode }
                         name='toggleDarkMode'/>
                     </ListItemIcon>
