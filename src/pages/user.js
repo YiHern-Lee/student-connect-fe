@@ -26,7 +26,7 @@ class user extends Component {
 
     componentDidMount() {
         const userId = this.props.match.params.userId;
-        if (this.props.data.page !== `user=${userId}`) {
+        if (this.props.UI.page !== `user=${userId}`) {
             this.props.setUserPage(userId);
             this.props.getUserPosts(userId, this.state.postReq);
         }
@@ -37,7 +37,7 @@ class user extends Component {
         const currId = this.props.match.params.userId;
         if (prevId !== currId) {
             this.props.setUserPage(currId);
-            this.props.getUserPosts(currId);
+            this.props.getUserPosts(currId, this.state.postReq);
         }
     }
 
@@ -85,7 +85,8 @@ class user extends Component {
 
 const mapStateToProps = (state) => ({
     data: state.data,
-    user: state.user
+    user: state.user,
+    UI: state.UI
 });
 
 const mapActionsToProps = {

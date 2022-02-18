@@ -13,7 +13,7 @@ const styles = (theme) => ({
     ...theme.styles
 })
 
-export class ForumCard extends Component {
+class ForumCard extends Component {
     render() {
         const { classes, forum : { faculty, title } } = this.props;
         return (
@@ -21,13 +21,13 @@ export class ForumCard extends Component {
                 <Card className={classes.card}>
                     <CardContent className={classes.content}>
 
-                        <Typography className={classes.postTitle} variant="h5" color="textPrimary" component={Link} to={`/forums/${title}`}>
+                        <Typography className={classes.postTitle} variant="h5" color="textPrimary" component={Link} to={`/forums/forum/${title}`}>
                             { title }
                         </Typography>
                         <Typography paragraph className={classes.postBody} variant="body1">
                             { faculty }
                         </Typography>
-                        <Button component={Link} to={`/forums/${title}`}>View forum</Button>
+                        <Button component={Link} to={`/forums/forum/${title}`}>View forum</Button>
                     </CardContent>
                 </Card>
             </div>

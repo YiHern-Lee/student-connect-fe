@@ -15,7 +15,7 @@ class ForumDisplay extends Component {
         const { classes, forum : { faculty, title } } = this.props
         return (
             <div>
-                <Button className={ classes.forumDisplayList } component={ Link } to={`/forums/${title}`}>
+                <Button className={ classes.forumDisplayList } component={ Link } to={`/forums/forum/${title}`}>
                     <ListItem className={ classes.listItem }>
                             <div>
                                 <Typography className={ classes.forumTitle } variant="h6">

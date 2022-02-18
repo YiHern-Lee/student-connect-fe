@@ -9,6 +9,7 @@ import { IconButton, Button, TextField, Dialog,
 import { Add as AddIcon, Close as CloseIcon } from '@material-ui/icons';
 import { connect } from 'react-redux';
 import { createForum, clearErrors } from '../../redux/actions/dataActions';
+import { faculties } from '../../util/data';
 
 const styles = (theme) => ({
     ...theme.styles
@@ -59,15 +60,14 @@ class CreateForum extends Component {
     render() {
         const { errors } = this.state;
         const { classes, UI: { loading }, user: { /* credentials: { username }, */ authenticated }} = this.props;
-        const faculties = ['School of Computing', 'School of Business', 'Faculty of Science', 'Gonna add all the faculties']
         return (
             <Fragment>
                 <Tooltip title='Create a forum' arrow>
                     { authenticated ? 
-                    (<IconButton onClick={ this.handleOpen }>
+                    (<IconButton color='secondary' onClick={ this.handleOpen }>
                         <AddIcon/>
                     </IconButton>) : 
-                    (<IconButton component={ Link } 
+                    (<IconButton color='secondary' component={ Link } 
                         to={{ pathname: '/login', state: { from: this.props.location.pathname }}}>
                         <AddIcon/>
                     </IconButton>)}              
@@ -94,7 +94,8 @@ class CreateForum extends Component {
                                 helperText={ errors.title ? errors.title : null }
                                 className={ classes.textField }
                                 onChange={ this.handleChange }
-                                fullWidth />
+                                fullWidth 
+                                inputProps={{ maxLength: 20 }}/>
                             {/* <TextField
                                 color="secondary"
                                 name='faculty'

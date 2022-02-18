@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/styles';
-import { Card, Typography, CardContent, GridList, GridListTile } from '@material-ui/core';
+import { Card, CardContent, GridList, GridListTile } from '@material-ui/core';
 
 const styles = (theme) => ({
     ...theme.styles
@@ -20,8 +20,7 @@ export class ForumExploreSkeleton extends Component {
             <div>
                 <Card style={{ marginBottom: '3%' }}>
                     <CardContent style={{ display: 'flex' }}>
-                        <div style={{ marginRight: 'auto', marginBottom: '16px' }}>
-                            <Typography variant="h5">Forums</Typography>
+                        <div style={{ marginRight: 'auto', marginBottom: '14px', padding: 0 }}>
                         </div>
                     </CardContent>
                 </Card>

@@ -24,15 +24,6 @@ class PostComponent extends Component {
         super(props);
         this.buttonRef = React.createRef();
     }
-    state = {
-        menuOpen: false
-    };
-    handleMenuClick = () => {
-        this.setState({ menuOpen: true });
-    }
-    handleMenuClose = () => {
-        this.setState({ menuOpen: false });
-    }
     upvotedPost = () => {
         return this.props.user.upvotes && 
             this.props.user.upvotes.find(upvote => upvote === this.props.post.postId);
@@ -78,7 +69,7 @@ class PostComponent extends Component {
                 <Card className={classes.card}>
                     <CardContent className={classes.content} style={{ maxHeight: '500px' }}>
                         <div className={classes.posterDisplay}>
-                            <Avatar src={ userImageUrl } className={ classes.posterDisplayChild}></Avatar> 
+                            <Avatar src={ userImageUrl } className={ classes.posterDisplayChild} component={ Link } to={`/users/${userId}`}></Avatar> 
                             <div className={ classes.posterDisplayChild}> 
                                 <Typography
                                     className={ classes.posterDisplayChildTextTop} variant="h6" >
@@ -88,7 +79,7 @@ class PostComponent extends Component {
                                     { dayjs(createdAt).fromNow() }
                                 </Typography>
                             </div>
-                            <Typography className={ classes.postForum } variant="caption"><Link to={`/forums/${forum}`}>Posted in /{ forum }</Link></Typography>
+                            <Typography className={ classes.postForum } variant="caption"><Link to={`/forums/forum/${forum}`}>Posted in /{ forum }</Link></Typography>
                         </div>
                         <Typography className={classes.postTitle} variant="h5">
                             { title }

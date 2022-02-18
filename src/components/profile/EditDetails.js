@@ -15,6 +15,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 // Icons
 import EditIcon from '@material-ui/icons/Edit';
+import { majors } from '../../util/data';
 
 const styles = (theme) => ({
   ...theme.styles
@@ -62,7 +63,7 @@ class EditDetails extends Component {
       "School of Computing": ["Computer Science", "Business Analytics"],
       "Science": ['Pharmaceutical Science', 'Statistics']
     } */
-    const majors = ['Computer Science', 'Business Analytics', 'Statistics', 'Gonna add all the majors']
+    const sortedMajors = majors.sort();
     const { classes } = this.props;
     return (
       <Fragment>
@@ -108,9 +109,9 @@ class EditDetails extends Component {
                   id: 'major-label'
                 }}>
                   <option key={"none"} value={""}>
-                    None
+                    --
                   </option>
-                  {majors.map(major => (
+                  {sortedMajors.map(major => (
                     <option key={major} value={major}> { major } </option>
                   ))}
               </Select>

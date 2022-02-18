@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 
 //MUI
 import { IconButton, MenuItem, Menu, Tooltip } from '@material-ui/core';
-import { MoreVertOutlined } from '@material-ui/icons';
+import { MoreHoriz } from '@material-ui/icons';
 
 const More = (props) => {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -18,7 +18,7 @@ const More = (props) => {
         <div>
             <Tooltip title='More' arrow>
                 <IconButton onClick={ handleClick } ref={ buttonRef } color='secondary'>
-                    <MoreVertOutlined />
+                    <MoreHoriz />
                 </IconButton>
             </Tooltip>
             <Menu
@@ -29,7 +29,7 @@ const More = (props) => {
                 <MenuItem>
                     Report
                 </MenuItem>
-                { props.authenticated && props.username === props.credentials.username ? 
+                { props.authenticated && (props.username === props.credentials.username || props.isMod) ? 
                     deleteComponent
                      : null}
             </Menu>

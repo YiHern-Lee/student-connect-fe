@@ -71,6 +71,11 @@ export default function themeData (darkMode) {
                 marginBottom: 20,
                 position: 'relative'
             },
+            media: {
+                height: 200,
+                width: 400,
+                margin: '2%'
+            },
             cardSideCol: {
                 
             },
@@ -79,9 +84,9 @@ export default function themeData (darkMode) {
                 width: '90%'
             },
             image: {
-                width: 100,
-                height: 100,
-                margin: '20px auto 20px auto'
+                maxWidth: 600,
+                /* height: 300, */
+                margin: '10px auto 10px auto'
             },
             button: {
                 marginTop: 20,
@@ -187,6 +192,10 @@ export default function themeData (darkMode) {
             },
             profile: {
                 padding: '10% 0 10% 0'
+            },
+            marketplaceGridTile: {
+                height: '500px',
+                padding: '25px'
             }
         }
     }

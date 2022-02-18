@@ -20,6 +20,11 @@ class post extends Component {
         this.props.getPost(postId);
     }
 
+    componentDidUpdate = (prevProps) => {
+        if (this.props.match.params.postId !== prevProps.match.params.postId) 
+            this.props.getPost(this.props.match.params.postId)
+    }
+
     render() {
         const { data: { post, comments }, loading } = this.props;
         let postDisplay = <PostComponent key={post.postId} post={ post } comments={ comments } />;

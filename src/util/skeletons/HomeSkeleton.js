@@ -28,10 +28,8 @@ export class HomeSkeleton extends Component {
                     <Grid item sm={8} xs={12}>
                         <Card>
                             <br />
-                                <div style={{ textAlign: "center" }}>
-                                    <Typography variant='h5'>&nbsp;</Typography>
-                                </div>
                             <br />
+                            <div style={{ marginBottom: '8px' }}></div>
                         </Card>
                         <br />
                         <PostSkeleton />

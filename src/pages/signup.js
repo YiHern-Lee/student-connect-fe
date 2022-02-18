@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types';
-import AppIcon from '../images/social-media.png';
+import StudentConnect from '../images/student-connect.png'
 import { Link } from 'react-router-dom';
 
 // MUI
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { Card, CircularProgress, Button, TextField, 
+    Typography, Grid, CardContent } from '@material-ui/core';
 
 // Redux
 import { connect } from 'react-redux';
@@ -68,85 +65,104 @@ class signup extends Component {
         const { errors } = this.state;
 
         return (
-            <Grid container className={classes.form}>
-                <Grid item sm />
-                <Grid item sm>
-                    <img src={AppIcon} alt='social' className={classes.image} />
-                    <Typography variant="h2" className={classes.pageTitle}>Signup</Typography>
-                    <form noValidate onSubmit={this.handleSubmit}>
-                        <TextField
-                            id="email"
-                            name="email"
-                            type="email"
-                            label="Email"
-                            className={classes.textField}
-                            helperText={errors.email}
-                            error={errors.email ? true : false}
-                            value={this.state.email}
-                            onChange={this.handleChange}
-                            fullWidth
-                            color="secondary"
-                        />
-                        <TextField
-                            id="password"
-                            name="password"
-                            type="password"
-                            label="Password"
-                            className={classes.textField}
-                            helperText={errors.password}
-                            error={errors.password ? true : false}
-                            value={this.state.password}
-                            onChange={this.handleChange}
-                            fullWidth
-                            color="secondary"
-                        />
-                        <TextField
-                            id="confirmPassword"
-                            name="confirmPassword"
-                            type="password"
-                            label="Confirm Password"
-                            className={classes.textField}
-                            helperText={errors.confirmPassword}
-                            error={errors.confirmPassword ? true : false}
-                            value={this.state.confirmPassword}
-                            onChange={this.handleChange}
-                            fullWidth
-                            color="secondary"
-                        />
-                        <TextField
-                            id="username"
-                            name="username"
-                            type="text"
-                            label="Username"
-                            className={classes.textField}
-                            helperText={errors.username}
-                            error={errors.username ? true : false}
-                            value={this.state.username}
-                            onChange={this.handleChange}
-                            fullWidth
-                            color="secondary"
-                        />
-                        {errors.general && (
-                            <Typography variant="body2" className={classes.customError}>
-                                {errors.general}
-                            </Typography>
-                        )}
-                        
-                        <Button type="submit" 
-                            variant="contained" 
-                            color="default" 
-                            className={classes.button}
-                            disabled={loading}> 
-                            Signup 
-                            { loading && (<CircularProgress size={30} className={classes.progress} />) } </Button>
+            <Grid container className={classes.form} spacing={5}>
+                <Grid item sm >
+                    <div style={{ textAlign: 'center' }}>
                         <br />
-                        <small>
-                            Already have an account? Log in <Link to={{ pathname: '/login', state: { from: this.state.lastLocation }}}>here</Link>
-                        </small>
-
-                    </form>
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <img src={StudentConnect} alt='social' className={classes.image} />
+                    </div>
                 </Grid>
-                <Grid item sm />
+                <Grid item sm>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <Card>
+                        <CardContent>
+                            <form noValidate onSubmit={this.handleSubmit}>
+                                <TextField
+                                    id="email"
+                                    name="email"
+                                    type="email"
+                                    label="Email"
+                                    className={classes.textField}
+                                    helperText={errors.email}
+                                    error={errors.email ? true : false}
+                                    value={this.state.email}
+                                    onChange={this.handleChange}
+                                    fullWidth
+                                    color="secondary"
+                                />
+                                <TextField
+                                    id="password"
+                                    name="password"
+                                    type="password"
+                                    label="Password"
+                                    className={classes.textField}
+                                    helperText={errors.password}
+                                    error={errors.password ? true : false}
+                                    value={this.state.password}
+                                    onChange={this.handleChange}
+                                    fullWidth
+                                    color="secondary"
+                                />
+                                <TextField
+                                    id="confirmPassword"
+                                    name="confirmPassword"
+                                    type="password"
+                                    label="Confirm Password"
+                                    className={classes.textField}
+                                    helperText={errors.confirmPassword}
+                                    error={errors.confirmPassword ? true : false}
+                                    value={this.state.confirmPassword}
+                                    onChange={this.handleChange}
+                                    fullWidth
+                                    color="secondary"
+                                />
+                                <TextField
+                                    id="username"
+                                    name="username"
+                                    type="text"
+                                    label="Username"
+                                    className={classes.textField}
+                                    helperText={errors.username}
+                                    error={errors.username ? true : false}
+                                    value={this.state.username}
+                                    onChange={this.handleChange}
+                                    fullWidth
+                                    color="secondary"
+                                />
+                                {errors.general && (
+                                    <Typography variant="body2" className={classes.customError}>
+                                        {errors.general}
+                                    </Typography>
+                                )}
+                                
+                                <Button type="submit" 
+                                    variant="outlined" 
+                                    color="secondary" 
+                                    className={classes.button}
+                                    disabled={loading}> 
+                                    SIGN UP
+                                    { loading && (<CircularProgress size={30} className={classes.progress} />) } </Button>
+                                <br />
+                                <br />
+                                <small>
+                                    Already have an account? Log in <Link to={{ pathname: '/login', state: { from: this.state.lastLocation }}}>here</Link>
+                                </small>
+
+                            </form>
+                        </CardContent>
+                    </Card>
+                </Grid>
             </Grid>
 
         );

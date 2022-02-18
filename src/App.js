@@ -1,7 +1,7 @@
 import './App.css';
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { home, login, signup, forumExplore, forum, post, user } from "./pages/index";
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
+import { home, login, signup, forumExplore, forum, post, user, groupExplore, group, groupPost, marketplace, marketplaceListing } from "./pages/index";
 import { Navbar } from "./components/index";
 import themeData from './util/theme';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
@@ -53,13 +53,19 @@ const App = () => {
             <div className="container">
               <Navbar />
                 <Switch>
-                    <Route exact path="/forums" component={ forumExplore }></Route>
-                    <Route exact path="/forums/:forumId" component={ forum }></Route>
-                    <Route exact path="/" component={ home }></Route>
+                    <Route exact path="/" render={() => <Redirect to="/home" />}></Route>
+                    <Route exact path="/forums/:query?" component={ forumExplore }></Route>
+                    <Route exact path="/forums/forum/:forumId/:query?" component={ forum }></Route>
+                    <Route exact path="/home/:query?" component={ home }></Route>
                     <Route exact path="/login" component={ login }></Route>
                     <Route exact path="/signup" component={ signup }></Route>
                     <Route exact path="/posts/:postId" component={ post }></Route>
                     <Route exact path="/users/:userId" component={ user }></Route>
+                    <Route exact path="/groups" component={ groupExplore }></Route>
+                    <Route exact path="/groups/:groupId/:query?" component={ group }></Route>
+                    <Route exact path="/group-posts/:postId" component={ groupPost }></Route>
+                    <Route exact path="/marketplace/:query?" component={ marketplace }></Route>
+                    <Route exact path="/marketplace/listings/:postId" component={ marketplaceListing }></Route>
                 </Switch>
             </div>
           </Router>

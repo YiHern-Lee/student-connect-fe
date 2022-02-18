@@ -53,20 +53,48 @@ class Notifications extends Component {
         }
         let notificationsMarkup = notifications && notifications.length > 0 ? (
             notifications.map(notification => {
-                const isPost = notification.type === 'post'
                 const time = dayjs(notification.createdAt).fromNow();
                 const sender = notification.sender;
+                let text;
+                let link;
+                switch (notification.type) {
+                    case 'post':
+                        text = `${ sender } posted a new post in ${ notification.forum }`;
+                        link = `/posts/${ notification.postId }`;
+                        break;
+                    case 'groupPost':
+                        text = `${ sender } posted a new post in ${ notification.group }`;
+                        link = `/group-posts/${ notification.groupPostId }`
+                        break;
+                    case 'comment':
+                        if (notification.postId) {
+                            text = `${ sender } commented on your post`;
+                            link = `/posts/${ notification.postId }`
+                        }
+                        else if (notification.groupPostId) {
+                            text = `${ sender } commented on your post`;
+                            link = `/group-posts/${ notification.groupPostId }`
+                        }
+                        else if (notification.listingId) {
+                            text = `${ sender } commented on your listing`;
+                            link = `/marketplace/${ notification.listingId }`
+                        };
+                        break;
+                    default:
+                        text = '';
+                        link = '/';
+                }
                 return (
                 <MenuItem 
                     key={notification.notificationId} 
                     onClick={ this.handleClose } 
                     component={ Link }
-                    to={`/posts/${notification.postId}`}>
+                    to={ link }>
                     <ListItemIcon>
                         <ArrowBackIosIcon />
                     </ListItemIcon>
                     <Typography variant="body1">
-                        { isPost ? `${sender} posted a new post` : `${sender} commented on your post`}
+                        { text }
                     </Typography>
                     &nbsp;&nbsp;&nbsp;
                     <Typography variant="subtitle2">

@@ -5,19 +5,18 @@ import { getUserData } from './dataActions';
 export const loginUser = (userData, history, lastLocation) => (dispatch) => {
     dispatch({ type: LOADING_UI });
     axios.post('/login', userData)
-            .then(res => {
-                setAuthorizationHeader(res.data.token);
-                dispatch(getCurrentUserData());
-                dispatch({ type: CLEAR_ERRORS });
-                history.push(lastLocation);
+        .then(res => {
+            setAuthorizationHeader(res.data.token);
+            dispatch(getCurrentUserData());
+            dispatch({ type: CLEAR_ERRORS });
+            history.push(lastLocation);
+        })
+        .catch(err => {
+            dispatch({
+                type: SET_ERRORS,
+                payload: err.response.data
             })
-            .catch(err => {
-                console.error(err.response.data)
-                dispatch({
-                    type: SET_ERRORS,
-                    payload: err.response.data
-                })
-            });
+        });
 }
 
 export const signupUser = (newUserData, history, lastLocation) => (dispatch) => {

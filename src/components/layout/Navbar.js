@@ -41,8 +41,8 @@ const Navbar = (props) => {
                 <Toolbar>
                         <div className='nav-container-left'>
                             <Button component={ Link } to="/forums" color="secondary"><Typography>Forums</Typography></Button>
-                            <Button component={ Link } to="/" color="secondary"><Typography>Marketplaces</Typography></Button>
-                            <Button component={ Link } to="/" color="secondary"><Typography>Groups</Typography></Button>
+                            <Button component={ Link } to="/marketplace" color="secondary"><Typography>Marketplace</Typography></Button>
+                            <Button component={ Link } to="/groups" color="secondary"><Typography>Groups</Typography></Button>
                         </div>
                         { props.authenticated ? <Button style={{ textTransform: 'none'}} component={Link} to={`/users/${props.userId}`}>
                             <Avatar className={ classes.imageSmall } 
@@ -55,7 +55,7 @@ const Navbar = (props) => {
                                     to={{ pathname: '/login', state: { from: currentLocation }}}>
                                     <NotificationsIcon color='secondary' />
                                 </IconButton>}
-                        <IconButton color="inherit" component={ Link } to="/"><HomeIcon color="secondary"/></IconButton>
+                        <IconButton color="inherit" component={ Link } to="/home"><HomeIcon color="secondary"/></IconButton>
                         <IconButton ref={buttonRef} onClick={openMenu} ><SettingsIcon color="secondary"/></IconButton>
                 </Toolbar>
             </AppBar>

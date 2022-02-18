@@ -3,7 +3,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types';
 
 //MUI
-import { Dialog, DialogTitle, Typography, DialogActions, Button } from '@material-ui/core';
+import { Dialog, DialogTitle, Typography, DialogActions, Button, MenuItem } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { deleteComment } from '../../redux/actions/dataActions';
 
@@ -21,7 +21,7 @@ class DeleteComment extends Component {
     handleClose = () => {
         this.setState({ open: false });
     }
-    DeleteComment = () => {
+    deleteComment = () => {
         this.props.deleteComment(this.props.commentId);
         this.setState({ open: false });
     }
@@ -30,10 +30,10 @@ class DeleteComment extends Component {
 
         return (
             <Fragment>
-                <Button onClick={ this.handleOpen }
-                    className={ classes.deleteButton} >
+                <MenuItem onClick={ this.handleOpen }
+                    className={ classes.deleteButton } >
                     Delete
-                </Button>
+                </MenuItem>
                 <Dialog open={ this.state.open } 
                     onClose={ this.handleClose }
                     fullWidth
@@ -44,11 +44,11 @@ class DeleteComment extends Component {
                             </Typography>
                         </DialogTitle>
                         <DialogActions>
-                            <Button onClick={ this.handleClose } color='primary'>
-                                Cancel
+                            <Button onClick={ this.handleClose } style={{ textTransform: 'none' }}>
+                                <Typography color='error'>Cancel</Typography>
                             </Button>
-                            <Button onClick={ this.DeleteComment } color='default'>
-                                Delete
+                            <Button onClick={ this.deleteComment } style={{ textTransform: 'none' }}>
+                                <Typography color='secondary'>Delete</Typography>
                             </Button>
                         </DialogActions>
                 </Dialog>
@@ -58,9 +58,8 @@ class DeleteComment extends Component {
 }
 
 DeleteComment.propTypes = {
-    DeleteComment: PropTypes.func.isRequired,
+    deleteComment: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,
-    postId: PropTypes.string.isRequired
 }
 
 export default connect(null, { deleteComment })(withStyles(styles)(DeleteComment));

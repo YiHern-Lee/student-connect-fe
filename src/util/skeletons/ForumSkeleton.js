@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
-import { withStyles } from '@material-ui/styles';
 import { Grid, Card, Typography, CardContent } from '@material-ui/core';
 import PostSkeleton from './PostSkeleton';
-
-const styles = (theme) => ({
-    ...theme.styles
-})
 
 export class ForumSkeleton extends Component {
     render() {
@@ -45,4 +40,4 @@ export class ForumSkeleton extends Component {
     }
 }
 
-export default withStyles(styles)(ForumSkeleton)
+export default ForumSkeleton

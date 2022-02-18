@@ -31,7 +31,7 @@ class DeletePost extends Component {
         return (
             <Fragment>
                 <MenuItem onClick={ this.handleOpen }
-                    className={ classes.deleteButton} >
+                    className={ classes.deleteButton } >
                     Delete
                 </MenuItem>
                 <Dialog open={ this.state.open } 

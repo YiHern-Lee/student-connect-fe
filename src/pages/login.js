@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types';
-import AppIcon from '../images/social-media.png';
+import StudentConnect from '../images/student-connect.png'
+
 import { Link } from 'react-router-dom';
 
 // MUI
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { Card, CircularProgress, Button, TextField, 
+    Typography, Grid, CardContent } from '@material-ui/core';
 
 // Redux
 import { connect } from 'react-redux';
@@ -61,11 +59,28 @@ class login extends Component {
         const { classes, UI: { loading } } = this.props;
         const { errors } = this.state;
         return (
-            <Grid container className={classes.form}>
-                <Grid item sm />
+            <Grid container className={classes.form} spacing={5}>
+                <Grid item sm >
+                    <div style={{ textAlign: 'center' }}>
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <img src={StudentConnect} alt='social' className={classes.image} />
+                    </div>
+                </Grid>
                 <Grid item sm>
-                    <img src={AppIcon} alt='social' className={classes.image} />
-                    <Typography variant="h2" className={classes.pageTitle}>Login</Typography>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <Card>
+                        <CardContent>
                     <form noValidate onSubmit={this.handleSubmit} color="secondary">
                         <TextField
                             id="email"
@@ -99,20 +114,24 @@ class login extends Component {
                             </Typography>
                         )}
                         <Button type="submit" 
-                            variant="contained" 
-                            color="default" 
+                            variant="outlined" 
+                            color="secondary" 
                             className={classes.button}
                             disabled={loading}>
-                             Login 
+                             LOG IN
                         { loading && (<CircularProgress size={30} className={classes.progress} />) } </Button>
                         <br />
+                        <br />
                         <small>
-                            Don't have an account? Sign up <Link to={{ pathname: '/signup', state: { from: this.state.lastLocation }}}>here</Link>
+                            Don't have an account? Sign up <Link to={{ pathname: '/signup', 
+                                state: { from: this.state.lastLocation }}}
+                                style={{ textDecorationLine: 'underline' }}>here</Link>
                         </small>
 
                     </form>
+                    </CardContent>
+                </Card>
                 </Grid>
-                <Grid item sm />
             </Grid>
 
         );

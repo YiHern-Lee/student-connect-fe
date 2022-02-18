@@ -4,7 +4,7 @@ import { SET_FORUM_POSTS, LOADING_DATA, SET_FORUMS,
     SET_POST, UPVOTE_COMMENTS, DOWNVOTE_COMMENTS, 
     REMOVE_UPVOTE_COMMENTS, REMOVE_DOWNVOTE_COMMENTS, DELETE_POST, 
     CREATE_POST, CREATE_COMMENT, DELETE_COMMENT, 
-    SET_OTHER_USER_DATA, ADD_POSTS, ADD_FORUMS } from '../types';
+    SET_OTHER_USER_DATA, ADD_POSTS, ADD_FORUMS, SET_USER_GROUPS, SET_GROUP_INFO, MAKE_MODERATOR, MAKE_MEMBER, ADD_MEMBER, REMOVE_MEMBER } from '../types';
 
 const initialState = {
     info: {},
@@ -17,6 +17,7 @@ const initialState = {
 
 export default function data(state = initialState, action) {
     let index;
+    let id;
     switch(action.type) {
         case SET_FORUM_POSTS:
             return {
@@ -24,6 +25,11 @@ export default function data(state = initialState, action) {
                 loading: false,
                 info: action.payload.forumInfo,
                 posts: action.payload.posts   
+            };
+        case SET_GROUP_INFO:
+            return {
+                ...state,
+                info: action.payload
             };
         case LOADING_DATA:
             return {
@@ -89,8 +95,18 @@ export default function data(state = initialState, action) {
                 ...state
             };
         case DELETE_COMMENT:
+            state.post = {
+                ...state.post,
+                commentCount: state.post.commentCount - 1
+            };
             index = state.comments.findIndex(comment => comment.commentId === action.payload);
+            id = state.comments[index].postId;
             state.comments.splice(index, 1);
+            index = state.posts.findIndex(post => post.postId === id);
+            if (index >= 0) state.posts[index] = {
+                ...state.posts[index],
+                commentCount: state.posts[index].commentCount - 1
+            };
             return {
                 ...state
             };
@@ -103,29 +119,58 @@ export default function data(state = initialState, action) {
                 ]
             };
         case CREATE_COMMENT:
-            if (state.post.postId === action.payload.postId) state.post = {
+            state.post = {
                 ...state.post,
                 commentCount: state.post.commentCount + 1
             };
             index = state.posts.findIndex(post => post.postId === action.payload.postId);
-            state.posts[index] = {
+            if (index >= 0) state.posts[index] = {
                 ...state.posts[index],
                 commentCount: state.posts[index].commentCount + 1
-            }
+            };
             return {
                 ...state,
                 comments: [
                     action.payload,
                     ...state.comments
                 ]
-            }
+            };
         case SET_OTHER_USER_DATA:
             return {
                 ...state,
                 loading: false,
                 info: action.payload.userDetails,
                 posts: action.payload.posts
-            }
+            };
+        case SET_USER_GROUPS:
+            return {
+                ...state,
+                loading: false,
+                forums: action.payload
+            };
+        case MAKE_MODERATOR:
+            index = state.info.members.findIndex(member => member.userId === action.payload);
+            state.info.members[index].role = 'moderator';
+            return {
+                ...state
+            };
+        case MAKE_MEMBER:
+            index = state.info.members.findIndex(member => member.userId === action.payload);
+            state.info.members[index].role = 'member';
+            return {
+                ...state
+            };
+        case ADD_MEMBER:
+            state.info.members.push(action.payload);
+            return {
+                ...state
+            };
+        case REMOVE_MEMBER:
+            index = state.info.members.findIndex(member => member.userId === action.payload);
+            state.info.members.splice(index, 1);
+            return {
+                ...state
+            };
         default:
             return state
     }

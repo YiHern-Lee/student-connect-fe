@@ -14,13 +14,6 @@ const styles = (theme) => ({
 class CreateComment extends Component {
     state = {
         body: '',
-        errors: {}
-    }
-
-    componentDidUpdate = (prevProps) => {
-        if (this.props.UI.errors !== prevProps.UI.errors) {
-            this.setState({ errors: this.props.UI.errors })
-        }
     }
 
     handleChange = (event) => {
@@ -29,7 +22,7 @@ class CreateComment extends Component {
     
     handleSubmit = (event) => {
         event.preventDefault();
-        this.props.createComment({ 
+        if (this.state.body.trim()) this.props.createComment({ 
             postId: this.props.postId, 
             body: this.state.body,
         });
@@ -37,7 +30,6 @@ class CreateComment extends Component {
     }
     
     render() {
-        const { errors } = this.state;
         const { classes, user: { credentials: { userImageUrl }, authenticated }} = this.props;
         return (
             <div style={{ display: 'flex', justifyContent: 'center', position: 'relative' }}>
@@ -47,14 +39,13 @@ class CreateComment extends Component {
                 <TextField name='body'
                     type='text'
                     label='Comment on post'
-                    error={ errors.body ? true : false}
                     fullWidth
                     value={ this.state.body }
                     onChange={ this.handleChange }
-                    helperText={ errors.body ? errors.body : null }
                     className={ classes.textField }
                     placeholder='Write a comment...' 
-                    color="secondary"/>
+                    color="secondary"
+                    inputProps={{ maxLength: 200 }} />
                 </form> : 
                 <form className={ classes.commentForm }>
                 <TextField component={Link} 
