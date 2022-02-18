@@ -1,3 +1,4 @@
+<<<<<<< HEAD:src/components/forums/ForumCard.js
 import React, { Component } from 'react'
 import withStyles from '@material-ui/core/styles/withStyles';
 
@@ -36,3 +37,43 @@ class ForumCard extends Component {
 }
 
 export default withStyles(styles)(ForumCard);
+=======
+import React, { Component } from 'react'
+import withStyles from '@material-ui/core/styles/withStyles';
+
+//MUI
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import { Button } from '@material-ui/core';
+
+import { Link } from 'react-router-dom';
+
+const styles = (theme) => ({
+    ...theme.styles
+})
+
+export class ForumCard extends Component {
+    render() {
+        const { classes, forum : { faculty, title } } = this.props;
+        return (
+            <div>
+                <Card className={classes.card}>
+                    <CardContent className={classes.content}>
+
+                        <Typography className={classes.postTitle} variant="h5" color="textPrimary" component={Link} to={`/forums/${title}`}>
+                            { title }
+                        </Typography>
+                        <Typography paragraph className={classes.postBody} variant="body1">
+                            { faculty }
+                        </Typography>
+                        <Button component={Link} to={`/forums/${title}`}>View forum</Button>
+                    </CardContent>
+                </Card>
+            </div>
+        )
+    }
+}
+
+export default withStyles(styles)(ForumCard);
+>>>>>>> b2b7af50f021ccb02c1f51fc72d9bae086a0fad7:src/components/displays/ForumCard.js

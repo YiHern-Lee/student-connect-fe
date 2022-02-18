@@ -45,5 +45,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+<<<<<<< HEAD
+  },
+  "proxy": "https://asia-southeast2-student-connect-3d3e3.cloudfunctions.net/api"
+=======
   }
+>>>>>>> 4305c4e0a29a38ab82bc35707653f29804a0f74c
 }
