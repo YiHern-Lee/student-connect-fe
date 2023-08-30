@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import Navbar from "./layout/Navbar";
 import ForumDisplay from "./forums/ForumDisplay";
 import PostDisplay from "./posts/PostDisplay";
@@ -27,13 +26,3 @@ export { Navbar, ForumDisplay, PostDisplay,
     GroupPostComponent, GroupCommentComponent, GroupPostDisplay, 
     CreateGroupPost, CreateGroup, GroupCard, ViewMembers, 
     AddMember, ListingDisplay, ListingComponent, CreateListing, ListingCommentComponent };
-=======
-import Navbar from "./layout/Navbar";
-import ForumDisplay from "./displays/ForumDisplay";
-import PostDisplay from "./displays/PostDisplay";
-import ForumCard from './displays/ForumCard';
-import CommentDisplay from "./displays/CommentDisplay";
-import PostComponent from "./displays/PostComponent";
-
-export { Navbar, ForumDisplay, PostDisplay, ForumCard, CommentDisplay, PostComponent };
->>>>>>> b2b7af50f021ccb02c1f51fc72d9bae086a0fad7
