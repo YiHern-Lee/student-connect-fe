@@ -17,8 +17,8 @@ import { setDarkMode, setLightMode } from './redux/actions/uiActions';
 import jwtDecode from 'jwt-decode';
 import axios from 'axios';
 
-axios.defaults.baseURL = "http://localhost:5001/student-connect-3d3e3/asia-southeast2/api"; 
-// axios.defaults.baseURL = "https://asia-southeast2-student-connect-3d3e3.cloudfunctions.net/api";
+// axios.defaults.baseURL = "http://localhost:5001/student-connect-3d3e3/asia-southeast2/api"; 
+axios.defaults.baseURL = "https://asia-southeast2-student-connect-3d3e3.cloudfunctions.net/api";
 
 const logout = () => {
   store.dispatch(logoutUser());
